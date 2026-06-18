@@ -25,7 +25,6 @@ with st.sidebar:
     st.image(
         "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Pao_dos_pobres_logo.png/120px-Pao_dos_pobres_logo.png",
         width=120,
-        width='content',
     )
     st.title("Pão dos Pobres")
     st.caption("Levantamento de Estatísticas Mensais (LEM) · 2021–2025")
