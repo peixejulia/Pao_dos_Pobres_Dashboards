@@ -10,7 +10,7 @@ import plotly.express as px
 import pandas as pd
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE
+from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo
 from utils.insights import resumo_composicao
 
 st.set_page_config(page_title="Composição · LEM", layout="wide")
@@ -29,7 +29,7 @@ with st.sidebar:
 df_f = df[df["ano"].isin(anos) & df["secao"].isin(secoes)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
-st.title("🍕 Composição por Área Temática")
+titulo_com_logo("Composição por Área Temática")
 st.markdown("**PQ3** · Quais seções e indicadores concentram o maior volume de registros?")
 st.divider()
 
@@ -99,6 +99,13 @@ with aba_sun:
     )
     fig_sun.update_layout(height=560, margin=dict(t=20, b=10))
     st.plotly_chart(fig_sun, use_container_width=True)
+    st.markdown(
+        "**📌 O que este gráfico mostra:** ele analisa a **composição** do volume total de "
+        "registros em duas camadas — primeiro por seção temática, depois por indicador dentro "
+        "de cada seção. Mostra que fatia do total cada seção e cada indicador representam, "
+        "ajudando a identificar rapidamente **onde a instituição concentra a maior parte da "
+        "sua atividade registrada** no período e nos filtros selecionados."
+    )
 
 # ── VIZ 3B: Treemap ───────────────────────────────────────────────────────────
 with aba_tree:
@@ -139,3 +146,9 @@ with aba_tree:
     )
     fig_tree.update_layout(height=560, margin=dict(t=20, b=10))
     st.plotly_chart(fig_tree, use_container_width=True)
+    st.markdown(
+        "**📌 O que este gráfico mostra:** é a mesma análise de composição do Sunburst "
+        "(seção → indicador), mas em formato de blocos retangulares, o que facilita "
+        "**comparar visualmente o tamanho** de indicadores de seções diferentes lado a lado — "
+        "algo mais difícil de perceber no formato circular."
+    )

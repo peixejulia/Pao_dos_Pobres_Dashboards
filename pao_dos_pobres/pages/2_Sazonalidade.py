@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE
+from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo
 from utils.insights import resumo_sazonalidade
 
 st.set_page_config(page_title="Sazonalidade · LEM", layout="wide")
@@ -42,7 +42,7 @@ else:
     df_viz = df_f
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
-st.title("🌹 Sazonalidade dos Registros")
+titulo_com_logo("Sazonalidade dos Registros")
 st.markdown("**PQ2** · Quais meses concentram maior volume de atendimentos e atividades?")
 st.divider()
 
@@ -152,6 +152,15 @@ fig_rosa.update_layout(
     margin=dict(t=20, b=80),
 )
 st.plotly_chart(fig_rosa, use_container_width=True)
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele analisa a **sazonalidade** dos registros, "
+    "cruzando o mês do ano com o ano civil — ou seja, mostra o volume mês a mês, ano a ano, "
+    "só que organizado em círculo em vez de em linha do tempo. Ele ajuda a responder: "
+    "existem meses que sistematicamente concentram mais (ou menos) atendimentos e atividades, "
+    "e esse padrão se repete de um ano para o outro? Essa informação é útil para "
+    "**planejamento operacional** — por exemplo, se setembro é sempre um mês de pico, a "
+    "equipe pode se preparar com antecedência para os anos seguintes."
+)
 
 st.divider()
 
@@ -209,3 +218,10 @@ fig_cal.update_layout(
     yaxis=dict(title="Ano", tickmode="linear", dtick=1),
 )
 st.plotly_chart(fig_cal, use_container_width=True)
+st.markdown(
+    "**📌 O que este gráfico mostra:** é a mesma informação de ano × mês do Gráfico de "
+    "Rosa acima, só que em formato de tabela colorida, o que facilita a leitura de **números "
+    "exatos** e a localização rápida de combinações específicas de ano e mês. Células cinzas "
+    "indicam ausência total de dado naquele mês, o que também serve como um primeiro "
+    "diagnóstico de qualidade dos dados (aprofundado na página Completude)."
+)

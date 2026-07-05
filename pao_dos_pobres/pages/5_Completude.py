@@ -3,7 +3,7 @@ Página 5 — Existem dados ausentes ou inconsistentes?
 
 Visualizações:
   • Heatmap de Completude Anotado — ausências por indicador e ano
-  • Strip Plot com Jitter          — distribuição dos valores por indicador e ano
+  • Gráfico de Linha              — evolução mensal de um indicador (lacunas e picos)
 """
 import streamlit as st
 import plotly.graph_objects as go
@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE
+from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo
 from utils.insights import resumo_completude
 
 st.set_page_config(page_title="Completude · LEM", layout="wide")
@@ -31,7 +31,7 @@ with st.sidebar:
 df_f = df[df["secao"].isin(secoes) & df["ano"].isin(anos)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
-st.title("🔍 Qualidade e Completude")
+titulo_com_logo("Qualidade e Completude")
 st.markdown("**PQ5** · Existem indicadores com registros ausentes, inconsistentes ou muito diferentes entre os anos?")
 st.divider()
 
@@ -94,45 +94,71 @@ fig_comp.update_layout(
     yaxis=dict(title="", autorange="reversed", tickfont=dict(size=10)),
 )
 st.plotly_chart(fig_comp, use_container_width=True)
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele mede a **qualidade/completude dos dados** — "
+    "para cada indicador e ano, calcula o percentual de meses que realmente têm um valor "
+    "registrado (em vez de estarem em branco). É essencial para interpretar corretamente os "
+    "outros gráficos do dashboard: um indicador com baixa completude pode parecer ter "
+    "\"caído\" em algum ano só porque **faltam registros**, não porque a atividade real da "
+    "instituição realmente diminuiu."
+)
 
 st.divider()
 
-# ── VIZ 5B: Strip Plot com Jitter ─────────────────────────────────────────────
-st.subheader("Strip Plot — Distribuição dos valores por indicador")
-st.caption("Cada ponto = um mês. Pontos afastados = outliers. Meses sem dado não aparecem.")
+# ── VIZ 5B: Gráfico de Linha — evolução mensal de um indicador ────────────────
+st.subheader("Evolução mensal de um indicador")
+st.caption("Cada ponto é um mês. Lacunas na linha = meses sem dado. Picos ou quedas bruscas podem indicar inconsistências.")
+with st.expander("ℹ️ Como ler este gráfico"):
+    st.markdown(
+        "**A ideia geral:** escolha um indicador na caixa abaixo e veja como o valor dele "
+        "mudou **mês a mês**, ao longo de todo o período (2021–2025).\n\n"
+        "**O que procurar:** uma **lacuna** (espaço em branco) na linha significa que aquele "
+        "mês não teve registro. Uma **queda ou subida muito brusca** em relação aos meses "
+        "vizinhos pode indicar um valor inconsistente (erro de digitação, mudança na forma "
+        "de contar, etc.) e vale a pena investigar com a equipe."
+    )
 
-secao_strip = st.selectbox(
-    "Filtrar por seção",
-    options=["Todas"] + sorted(df_f["secao"].unique()),
-    key="strip_secao",
+indicadores_disp_5 = sorted(df_f["indicador"].unique())
+indicador_linha = st.selectbox(
+    "Escolha um indicador",
+    options=indicadores_disp_5,
+    key="indicador_linha",
 )
 
-df_strip = df_f.copy() if secao_strip == "Todas" else df_f[df_f["secao"] == secao_strip]
-df_strip = df_strip.dropna(subset=["valor"])
+df_linha = (
+    df_f[df_f["indicador"] == indicador_linha]
+    .dropna(subset=["valor"])
+    .sort_values("data")
+)
 
-if df_strip.empty:
+if df_linha.empty:
     st.info("Nenhum dado para os filtros selecionados.")
 else:
-    fig_strip = px.strip(
-        df_strip,
-        x="ano",
+    secao_do_indicador = df_linha["secao"].iloc[0]
+    fig_linha = px.line(
+        df_linha,
+        x="data",
         y="valor",
-        color="secao",
-        color_discrete_map=CORES_SECAO,
-        facet_row="indicador",
-        stripmode="overlay",
+        markers=True,
         template=PLOTLY_TEMPLATE,
-        hover_data=["mes", "indicador", "secao"],
-        labels={"ano": "Ano", "valor": "Valor", "secao": "Seção"},
+        color_discrete_sequence=[CORES_SECAO.get(secao_do_indicador, "#2E86AB")],
+        labels={"data": "Mês", "valor": "Valor"},
+        hover_data={"mes": True, "ano": True},
     )
-    fig_strip.update_traces(marker=dict(size=6, opacity=0.7))
-    fig_strip.update_layout(
-        height=max(600, df_strip["indicador"].nunique() * 80),
-        margin=dict(t=40, b=40, l=20, r=20),
-        showlegend=True,
+    fig_linha.update_traces(
+        hovertemplate="<b>%{x|%b/%Y}</b><br>Valor: %{y:,.0f}<extra></extra>",
     )
-    # Limpar rótulos repetidos do facet
-    fig_strip.for_each_annotation(
-        lambda a: a.update(text=a.text.split("=")[-1], font=dict(size=9))
+    fig_linha.update_layout(
+        height=380,
+        margin=dict(t=20, b=20),
+        xaxis=dict(title="Mês"),
+        yaxis=dict(title="Valor"),
     )
-    st.plotly_chart(fig_strip, use_container_width=True)
+    st.plotly_chart(fig_linha, use_container_width=True)
+    st.markdown(
+        "**📌 O que este gráfico mostra:** ele foca em **um único indicador por vez** e "
+        "mostra sua série histórica mês a mês. Serve tanto para inspecionar visualmente a "
+        "completude (lacunas na linha = meses sem registro) quanto para identificar possíveis "
+        "**inconsistências** nos dados (valores muito fora do padrão dos meses vizinhos), "
+        "complementando a visão agregada por percentual do Heatmap de Completude acima."
+    )

@@ -11,7 +11,7 @@ import plotly.express as px
 import pandas as pd
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE
+from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo
 from utils.insights import resumo_variacoes
 
 st.set_page_config(page_title="Variações · LEM", layout="wide")
@@ -33,7 +33,7 @@ with st.sidebar:
 df_f = df[df["secao"].isin(secoes)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
-st.title("↕️ Variações entre Anos")
+titulo_com_logo("Variações entre Anos")
 st.markdown("**PQ4** · Quais indicadores apresentaram maiores variações entre os anos?")
 st.divider()
 
@@ -98,6 +98,13 @@ else:
         legend=dict(orientation="h", y=-0.08),
     )
     st.plotly_chart(fig_db, use_container_width=True)
+    st.markdown(
+        "**📌 O que este gráfico mostra:** ele compara, indicador por indicador, o volume "
+        "registrado nos **dois anos específicos** escolhidos na barra lateral. Responde "
+        "diretamente à pergunta: quais indicadores mais **cresceram ou caíram** entre esses "
+        "dois anos, e qual foi a magnitude dessa mudança? É a forma mais direta de medir "
+        "variação entre dois pontos no tempo, sem o \"ruído\" dos anos intermediários."
+    )
 
 st.divider()
 
@@ -169,6 +176,14 @@ fig_pc.update_layout(
     margin=dict(t=60, b=40, l=80, r=80),
 )
 st.plotly_chart(fig_pc, use_container_width=True)
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele expande a análise do Dumbbell Chart acima para "
+    "**todos os 5 anos ao mesmo tempo**, permitindo ver a trajetória completa de cada "
+    "indicador, não só o ponto de partida e o de chegada. É útil para identificar **padrões "
+    "de crescimento consistente**, **quedas pontuais isoladas** (que passariam despercebidas "
+    "numa comparação de só dois anos) ou **instabilidade** ao longo de todo o período "
+    "analisado, por seção (indicada pela cor)."
+)
 
 # Tabela auxiliar com variação absoluta
 with st.expander("Ver tabela de variações"):

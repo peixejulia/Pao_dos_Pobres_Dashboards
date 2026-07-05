@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE
+from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo
 from utils.insights import resumo_evolucao
 
 st.set_page_config(page_title="Evolução · LEM", layout="wide")
@@ -31,7 +31,7 @@ with st.sidebar:
 df_f = df[df["ano"].isin(anos) & df["secao"].isin(secoes)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
-st.title("📈 Como os indicadores evoluíram?")
+titulo_com_logo("Como os indicadores evoluíram?")
 st.markdown("**PQ1** · Análise da evolução temporal dos registros de 2021 a 2025.")
 st.divider()
 
@@ -98,6 +98,13 @@ else:
         hovermode="x unified",
     )
     st.plotly_chart(fig_stream, use_container_width=True)
+    st.markdown(
+        "**📌 O que este gráfico mostra:** ele cruza três informações ao mesmo tempo — o "
+        "tempo (mês a mês, de 2021 a 2025), a seção temática e o volume de registros. Serve "
+        "para identificar **tendências de crescimento ou queda de cada seção** ao longo do "
+        "tempo e enxergar mudanças na composição do total — por exemplo, se uma seção passou "
+        "a representar uma fatia maior ou menor do volume geral nos últimos anos."
+    )
 
 st.divider()
 
@@ -181,3 +188,10 @@ else:
         legend=dict(orientation="v", x=1.02, y=1),
     )
     st.plotly_chart(fig_bump, use_container_width=True)
+    st.markdown(
+        "**📌 O que este gráfico mostra:** dentro da seção escolhida acima, ele analisa como "
+        "o **ranking de importância de cada indicador mudou ano a ano**. Diferente do "
+        "Streamgraph, o foco aqui não é o volume absoluto, e sim a posição relativa — é útil "
+        "para identificar quais indicadores **ganharam ou perderam destaque** dentro da "
+        "seção ao longo dos 5 anos, mesmo que o volume total da seção tenha oscilado."
+    )

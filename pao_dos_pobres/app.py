@@ -8,7 +8,7 @@ import plotly.express as px
 import pandas as pd
 
 from utils.data import carregar_desdobramentos, carregar_gerencial
-from utils.style import CORES_SECAO, ANOS
+from utils.style import CORES_SECAO, ANOS, titulo_com_logo
 from utils.insights import resumo_geral
 
 # ── Configuração da página ────────────────────────────────────────────────────
@@ -54,7 +54,7 @@ df_filtrado = df[
 ]
 
 # ── Cabeçalho da página ───────────────────────────────────────────────────────
-st.title("🏠 Visão Geral")
+titulo_com_logo("Visão Geral")
 st.markdown(
     "Dashboard interativo com os indicadores do **Levantamento de Estatísticas Mensais (LEM)** "
     "da Fundação Pão dos Pobres · período **2021–2025**."
@@ -106,6 +106,13 @@ fig_ano.update_traces(
 fig_ano.update_xaxes(tickmode="linear", dtick=1)
 fig_ano.update_layout(height=360, margin=dict(t=20, b=20))
 st.plotly_chart(fig_ano, use_container_width=True)
+st.markdown(
+    "**📌 O que este gráfico mostra:** aqui somamos **todos** os registros do LEM (todas as "
+    "seções e indicadores juntos) por ano, dando uma visão panorâmica de como o volume total "
+    "de atendimentos e atividades da Fundação evoluiu de 2021 a 2025. É o ponto de partida "
+    "para saber se a instituição está registrando mais ou menos atividade ao longo do tempo, "
+    "antes de detalhar por seção, indicador ou mês nas páginas seguintes."
+)
 
 st.divider()
 
@@ -137,3 +144,10 @@ fig_secao.update_layout(
     yaxis=dict(autorange="reversed"),
 )
 st.plotly_chart(fig_secao, use_container_width=True)
+st.markdown(
+    "**📌 O que este gráfico mostra:** aqui os registros de **todo o período** (2021–2025) "
+    "são somados e agrupados pelas 4 seções temáticas do LEM (Desdobramentos Técnicos, "
+    "Educação, Profissionalização e Saúde). Ele responde à pergunta: qual área da instituição "
+    "concentra mais atividade registrada em termos absolutos? É o ponto de partida para "
+    "decidir onde vale a pena aprofundar a análise nas páginas de Composição e Evolução."
+)
