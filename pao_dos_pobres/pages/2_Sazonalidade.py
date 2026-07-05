@@ -68,35 +68,51 @@ media = df_mes["Volume"].mean()
 st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_sazonalidade(df_mes)))
 
 # ── VIZ 2A: Gráfico de Rosa ───────────────────────────────────────────────────
-st.subheader("Gráfico de Rosa — Distribuição circular por mês")
-st.caption("Barras radiais representam o volume de cada mês. Linha pontilhada vermelha = média mensal.")
+st.subheader("Gráfico de Rosa — Distribuição circular por mês e ano")
+st.caption("Uma cor por ano. Barras radiais representam o volume de cada mês. Linha pontilhada vermelha = média geral.")
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
         "Pense em um relógio: cada 'fatia' é um mês, começando em **Janeiro no topo** e "
-        "girando no sentido horário até Dezembro. Quanto **mais a barra se estende para fora** "
-        "do centro, **mais registros** aquele mês teve. A linha vermelha pontilhada marca a "
-        "**média** entre todos os meses — barras que passam dela tiveram volume acima da média."
+        "girando no sentido horário até Dezembro. Dentro de cada fatia, há uma **barra por "
+        "ano** (cores diferentes) — compare as cores para ver se aquele mês cresceu ou caiu "
+        "de um ano para o outro. Quanto **mais a barra se estende para fora** do centro, "
+        "**mais registros** houve. A linha vermelha pontilhada marca a **média geral** "
+        "(todos os meses e anos)."
     )
+
+# Volume por ano e mês (uma série/cor por ano)
+df_ano_mes = (
+    df_viz
+    .groupby(["ano", "mes"])["valor"]
+    .sum()
+    .reset_index(name="Volume")
+)
+
+PALETA_ANOS = ["#b3d9f2", "#7fb8e0", "#4a90c4", "#2E86AB", "#1a3a52"]
+anos_presentes = sorted(df_ano_mes["ano"].unique())
+cor_ano = {a: PALETA_ANOS[i % len(PALETA_ANOS)] for i, a in enumerate(anos_presentes)}
 
 fig_rosa = go.Figure()
 
-fig_rosa.add_trace(go.Barpolar(
-    r=df_mes["Volume"],
-    theta=df_mes["mes"],
-    marker_color=df_mes["Volume"],
-    marker_colorscale=[
-        [0,   "#b3d9f2"],
-        [0.5, "#2E86AB"],
-        [1,   "#1a3a52"],
-    ],
-    marker_line_color="white",
-    marker_line_width=1.5,
-    opacity=0.92,
-    hovertemplate="<b>%{theta}</b><br>Volume: %{r:,.0f}<extra></extra>",
-    showlegend=False,
-))
+for ano_i in anos_presentes:
+    serie = (
+        df_ano_mes[df_ano_mes["ano"] == ano_i]
+        .set_index("mes")
+        .reindex(ORDEM_MES)["Volume"]
+        .fillna(0)
+    )
+    fig_rosa.add_trace(go.Barpolar(
+        r=serie.values,
+        theta=ORDEM_MES,
+        name=str(ano_i),
+        marker_color=cor_ano[ano_i],
+        marker_line_color="white",
+        marker_line_width=1,
+        opacity=0.9,
+        hovertemplate=f"<b>%{{theta}} {ano_i}</b><br>Volume: %{{r:,.0f}}<extra></extra>",
+    ))
 
-# Linha de média (círculo pontilhado)
+# Linha de média geral (círculo pontilhado)
 # Usa os mesmos rótulos categóricos do eixo (meses) para não misturar com
 # valores numéricos de grau, que quebrariam o eixo angular categórico.
 theta_circ = ORDEM_MES + [ORDEM_MES[0]]
@@ -105,10 +121,11 @@ fig_rosa.add_trace(go.Scatterpolar(
     theta=theta_circ,
     mode="lines",
     line=dict(color="#E63946", width=1.5, dash="dot"),
-    name=f"Média: {media:,.0f}".replace(",", "."),
+    name=f"Média geral: {media:,.0f}".replace(",", "."),
 ))
 
 fig_rosa.update_layout(
+    barmode="group",
     polar=dict(
         radialaxis=dict(visible=True, showticklabels=True, gridcolor="#DDDDDD"),
         angularaxis=dict(
@@ -119,10 +136,10 @@ fig_rosa.update_layout(
         ),
         bgcolor="white",
     ),
-    legend=dict(orientation="h", y=-0.08, x=0.5, xanchor="center"),
+    legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center"),
     template=PLOTLY_TEMPLATE,
-    height=500,
-    margin=dict(t=20, b=60),
+    height=560,
+    margin=dict(t=20, b=80),
 )
 st.plotly_chart(fig_rosa, use_container_width=True)
 
