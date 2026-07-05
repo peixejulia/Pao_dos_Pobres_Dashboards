@@ -59,7 +59,14 @@ aba_sun, aba_tree = st.tabs(["☀️ Sunburst", "🗺️ Treemap"])
 
 # ── VIZ 3A: Sunburst ──────────────────────────────────────────────────────────
 with aba_sun:
-    st.caption("Clique em uma seção para dar zoom nos seus indicadores.")
+    st.markdown(
+        "**📌 O que este gráfico mostra:** ele analisa a **composição** do volume total de "
+        "registros em duas camadas — primeiro por seção temática, depois por indicador dentro "
+        "de cada seção. Mostra que fatia do total cada seção e cada indicador representam, "
+        "ajudando a identificar rapidamente **onde a instituição concentra a maior parte da "
+        "sua atividade registrada** no período e nos filtros selecionados."
+    )
+
     with st.expander("ℹ️ Como ler este gráfico"):
         st.markdown(
             "**A ideia geral:** este gráfico mostra uma hierarquia em camadas circulares — "
@@ -99,17 +106,16 @@ with aba_sun:
     )
     fig_sun.update_layout(height=560, margin=dict(t=20, b=10))
     st.plotly_chart(fig_sun, use_container_width=True)
-    st.markdown(
-        "**📌 O que este gráfico mostra:** ele analisa a **composição** do volume total de "
-        "registros em duas camadas — primeiro por seção temática, depois por indicador dentro "
-        "de cada seção. Mostra que fatia do total cada seção e cada indicador representam, "
-        "ajudando a identificar rapidamente **onde a instituição concentra a maior parte da "
-        "sua atividade registrada** no período e nos filtros selecionados."
-    )
 
 # ── VIZ 3B: Treemap ───────────────────────────────────────────────────────────
 with aba_tree:
-    st.caption("Tamanho de cada bloco proporcional ao volume acumulado.")
+    st.markdown(
+        "**📌 O que este gráfico mostra:** é a mesma análise de composição do Sunburst "
+        "(seção → indicador), mas em formato de blocos retangulares, o que facilita "
+        "**comparar visualmente o tamanho** de indicadores de seções diferentes lado a lado — "
+        "algo mais difícil de perceber no formato circular."
+    )
+
     with st.expander("ℹ️ Como ler este gráfico"):
         st.markdown(
             "**A ideia geral:** é a mesma informação do Sunburst (seção → indicador), só que "
@@ -146,9 +152,3 @@ with aba_tree:
     )
     fig_tree.update_layout(height=560, margin=dict(t=20, b=10))
     st.plotly_chart(fig_tree, use_container_width=True)
-    st.markdown(
-        "**📌 O que este gráfico mostra:** é a mesma análise de composição do Sunburst "
-        "(seção → indicador), mas em formato de blocos retangulares, o que facilita "
-        "**comparar visualmente o tamanho** de indicadores de seções diferentes lado a lado — "
-        "algo mais difícil de perceber no formato circular."
-    )

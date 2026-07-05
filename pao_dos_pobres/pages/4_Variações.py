@@ -47,7 +47,13 @@ df_anual = (
 
 # ── VIZ 4A: Dumbbell Chart ────────────────────────────────────────────────────
 st.subheader(f"Dumbbell Chart — {ano_a} vs {ano_b}")
-st.caption("Cada linha conecta o volume do ano inicial ao ano final. Verde = crescimento · Vermelho = queda.")
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele compara, indicador por indicador, o volume "
+    "registrado nos **dois anos específicos** escolhidos na barra lateral. Responde "
+    "diretamente à pergunta: quais indicadores mais **cresceram ou caíram** entre esses "
+    "dois anos, e qual foi a magnitude dessa mudança? É a forma mais direta de medir "
+    "variação entre dois pontos no tempo, sem o \"ruído\" dos anos intermediários."
+)
 
 if ano_a == ano_b:
     st.warning("Selecione anos diferentes para comparar.")
@@ -98,19 +104,20 @@ else:
         legend=dict(orientation="h", y=-0.08),
     )
     st.plotly_chart(fig_db, use_container_width=True)
-    st.markdown(
-        "**📌 O que este gráfico mostra:** ele compara, indicador por indicador, o volume "
-        "registrado nos **dois anos específicos** escolhidos na barra lateral. Responde "
-        "diretamente à pergunta: quais indicadores mais **cresceram ou caíram** entre esses "
-        "dois anos, e qual foi a magnitude dessa mudança? É a forma mais direta de medir "
-        "variação entre dois pontos no tempo, sem o \"ruído\" dos anos intermediários."
-    )
 
 st.divider()
 
 # ── VIZ 4B: Parallel Coordinates ──────────────────────────────────────────────
 st.subheader("Parallel Coordinates — Todos os anos simultaneamente")
-st.caption("Cada linha = um indicador. Passe o cursor para destacar. Linhas ascendentes = crescimento.")
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele expande a análise do Dumbbell Chart acima para "
+    "**todos os 5 anos ao mesmo tempo**, permitindo ver a trajetória completa de cada "
+    "indicador, não só o ponto de partida e o de chegada. É útil para identificar **padrões "
+    "de crescimento consistente**, **quedas pontuais isoladas** (que passariam despercebidas "
+    "numa comparação de só dois anos) ou **instabilidade** ao longo de todo o período "
+    "analisado, por seção (indicada pela cor)."
+)
+
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
         "**A ideia geral:** enquanto o Dumbbell Chart acima compara só dois anos, este "
@@ -176,14 +183,6 @@ fig_pc.update_layout(
     margin=dict(t=60, b=40, l=80, r=80),
 )
 st.plotly_chart(fig_pc, use_container_width=True)
-st.markdown(
-    "**📌 O que este gráfico mostra:** ele expande a análise do Dumbbell Chart acima para "
-    "**todos os 5 anos ao mesmo tempo**, permitindo ver a trajetória completa de cada "
-    "indicador, não só o ponto de partida e o de chegada. É útil para identificar **padrões "
-    "de crescimento consistente**, **quedas pontuais isoladas** (que passariam despercebidas "
-    "numa comparação de só dois anos) ou **instabilidade** ao longo de todo o período "
-    "analisado, por seção (indicada pela cor)."
-)
 
 # Tabela auxiliar com variação absoluta
 with st.expander("Ver tabela de variações"):

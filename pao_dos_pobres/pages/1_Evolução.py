@@ -40,7 +40,14 @@ st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_evolucao(df_f)))
 
 # ── VIZ 1A: Streamgraph ───────────────────────────────────────────────────────
 st.subheader("Streamgraph — Fluxo de volume por seção")
-st.caption("Cada faixa representa uma seção temática. A largura indica o volume registrado em cada mês.")
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele cruza três informações ao mesmo tempo — o "
+    "tempo (mês a mês, de 2021 a 2025), a seção temática e o volume de registros. Serve "
+    "para identificar **tendências de crescimento ou queda de cada seção** ao longo do "
+    "tempo e enxergar mudanças na composição do total — por exemplo, se uma seção passou "
+    "a representar uma fatia maior ou menor do volume geral nos últimos anos."
+)
+
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
         "**A ideia geral:** o eixo horizontal é o tempo (de 2021 a 2025) e cada faixa "
@@ -98,19 +105,19 @@ else:
         hovermode="x unified",
     )
     st.plotly_chart(fig_stream, use_container_width=True)
-    st.markdown(
-        "**📌 O que este gráfico mostra:** ele cruza três informações ao mesmo tempo — o "
-        "tempo (mês a mês, de 2021 a 2025), a seção temática e o volume de registros. Serve "
-        "para identificar **tendências de crescimento ou queda de cada seção** ao longo do "
-        "tempo e enxergar mudanças na composição do total — por exemplo, se uma seção passou "
-        "a representar uma fatia maior ou menor do volume geral nos últimos anos."
-    )
 
 st.divider()
 
 # ── VIZ 1B: Bump Chart ────────────────────────────────────────────────────────
 st.subheader("Bump Chart — Ranking de indicadores por ano")
-st.caption("A posição vertical indica o ranking do indicador dentro da seção selecionada. Linhas que sobem = crescimento relativo.")
+st.markdown(
+    "**📌 O que este gráfico mostra:** dentro da seção escolhida acima, ele analisa como "
+    "o **ranking de importância de cada indicador mudou ano a ano**. Diferente do "
+    "Streamgraph, o foco aqui não é o volume absoluto, e sim a posição relativa — é útil "
+    "para identificar quais indicadores **ganharam ou perderam destaque** dentro da "
+    "seção ao longo dos 5 anos, mesmo que o volume total da seção tenha oscilado."
+)
+
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
         "**A ideia geral:** este gráfico não mostra o volume bruto de cada indicador, e sim "
@@ -188,10 +195,3 @@ else:
         legend=dict(orientation="v", x=1.02, y=1),
     )
     st.plotly_chart(fig_bump, use_container_width=True)
-    st.markdown(
-        "**📌 O que este gráfico mostra:** dentro da seção escolhida acima, ele analisa como "
-        "o **ranking de importância de cada indicador mudou ano a ano**. Diferente do "
-        "Streamgraph, o foco aqui não é o volume absoluto, e sim a posição relativa — é útil "
-        "para identificar quais indicadores **ganharam ou perderam destaque** dentro da "
-        "seção ao longo dos 5 anos, mesmo que o volume total da seção tenha oscilado."
-    )

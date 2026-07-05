@@ -69,7 +69,16 @@ st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_sazonalidade(df_m
 
 # ── VIZ 2A: Gráfico de Rosa ───────────────────────────────────────────────────
 st.subheader("Gráfico de Rosa — Distribuição circular por mês e ano")
-st.caption("Uma cor por ano. Barras radiais representam o volume de cada mês. Linha pontilhada vermelha = média geral.")
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele analisa a **sazonalidade** dos registros, "
+    "cruzando o mês do ano com o ano civil — ou seja, mostra o volume mês a mês, ano a ano, "
+    "só que organizado em círculo em vez de em linha do tempo. Ele ajuda a responder: "
+    "existem meses que sistematicamente concentram mais (ou menos) atendimentos e atividades, "
+    "e esse padrão se repete de um ano para o outro? Essa informação é útil para "
+    "**planejamento operacional** — por exemplo, se setembro é sempre um mês de pico, a "
+    "equipe pode se preparar com antecedência para os anos seguintes."
+)
+
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
         "**A ideia geral:** este é um gráfico de barras \"dobrado\" em círculo. Pense em um "
@@ -152,21 +161,18 @@ fig_rosa.update_layout(
     margin=dict(t=20, b=80),
 )
 st.plotly_chart(fig_rosa, use_container_width=True)
-st.markdown(
-    "**📌 O que este gráfico mostra:** ele analisa a **sazonalidade** dos registros, "
-    "cruzando o mês do ano com o ano civil — ou seja, mostra o volume mês a mês, ano a ano, "
-    "só que organizado em círculo em vez de em linha do tempo. Ele ajuda a responder: "
-    "existem meses que sistematicamente concentram mais (ou menos) atendimentos e atividades, "
-    "e esse padrão se repete de um ano para o outro? Essa informação é útil para "
-    "**planejamento operacional** — por exemplo, se setembro é sempre um mês de pico, a "
-    "equipe pode se preparar com antecedência para os anos seguintes."
-)
 
 st.divider()
 
 # ── VIZ 2B: Calendar Heatmap ──────────────────────────────────────────────────
 st.subheader("Calendar Heatmap — Volume por ano e mês")
-st.caption("Intensidade da cor = volume registrado. Células cinzas = meses sem dado.")
+st.markdown(
+    "**📌 O que este gráfico mostra:** é a mesma informação de ano × mês do Gráfico de "
+    "Rosa acima, só que em formato de tabela colorida, o que facilita a leitura de **números "
+    "exatos** e a localização rápida de combinações específicas de ano e mês. Células cinzas "
+    "indicam ausência total de dado naquele mês, o que também serve como um primeiro "
+    "diagnóstico de qualidade dos dados (aprofundado na página Completude)."
+)
 
 df_cal = (
     df_viz
@@ -218,10 +224,3 @@ fig_cal.update_layout(
     yaxis=dict(title="Ano", tickmode="linear", dtick=1),
 )
 st.plotly_chart(fig_cal, use_container_width=True)
-st.markdown(
-    "**📌 O que este gráfico mostra:** é a mesma informação de ano × mês do Gráfico de "
-    "Rosa acima, só que em formato de tabela colorida, o que facilita a leitura de **números "
-    "exatos** e a localização rápida de combinações específicas de ano e mês. Células cinzas "
-    "indicam ausência total de dado naquele mês, o que também serve como um primeiro "
-    "diagnóstico de qualidade dos dados (aprofundado na página Completude)."
-)

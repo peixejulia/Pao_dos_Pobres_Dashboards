@@ -45,7 +45,14 @@ if not anos or not secoes or df_f.empty:
 
 # ── VIZ 5A: Heatmap de Completude ─────────────────────────────────────────────
 st.subheader("Heatmap de Completude — % de meses preenchidos por indicador e ano")
-st.caption("Verde escuro = 100% dos meses preenchidos · Amarelo = parcial · Vermelho = ausência.")
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele mede a **qualidade/completude dos dados** — "
+    "para cada indicador e ano, calcula o percentual de meses que realmente têm um valor "
+    "registrado (em vez de estarem em branco). É essencial para interpretar corretamente os "
+    "outros gráficos do dashboard: um indicador com baixa completude pode parecer ter "
+    "\"caído\" em algum ano só porque **faltam registros**, não porque a atividade real da "
+    "instituição realmente diminuiu."
+)
 
 pivot_comp = df_f.pivot_table(
     index="indicador",
@@ -94,20 +101,19 @@ fig_comp.update_layout(
     yaxis=dict(title="", autorange="reversed", tickfont=dict(size=10)),
 )
 st.plotly_chart(fig_comp, use_container_width=True)
-st.markdown(
-    "**📌 O que este gráfico mostra:** ele mede a **qualidade/completude dos dados** — "
-    "para cada indicador e ano, calcula o percentual de meses que realmente têm um valor "
-    "registrado (em vez de estarem em branco). É essencial para interpretar corretamente os "
-    "outros gráficos do dashboard: um indicador com baixa completude pode parecer ter "
-    "\"caído\" em algum ano só porque **faltam registros**, não porque a atividade real da "
-    "instituição realmente diminuiu."
-)
 
 st.divider()
 
 # ── VIZ 5B: Gráfico de Linha — evolução mensal de um indicador ────────────────
 st.subheader("Evolução mensal de um indicador")
-st.caption("Cada ponto é um mês. Lacunas na linha = meses sem dado. Picos ou quedas bruscas podem indicar inconsistências.")
+st.markdown(
+    "**📌 O que este gráfico mostra:** ele foca em **um único indicador por vez** e "
+    "mostra sua série histórica mês a mês. Serve tanto para inspecionar visualmente a "
+    "completude (lacunas na linha = meses sem registro) quanto para identificar possíveis "
+    "**inconsistências** nos dados (valores muito fora do padrão dos meses vizinhos), "
+    "complementando a visão agregada por percentual do Heatmap de Completude acima."
+)
+
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
         "**A ideia geral:** escolha um indicador na caixa abaixo e veja como o valor dele "
@@ -155,10 +161,3 @@ else:
         yaxis=dict(title="Valor"),
     )
     st.plotly_chart(fig_linha, use_container_width=True)
-    st.markdown(
-        "**📌 O que este gráfico mostra:** ele foca em **um único indicador por vez** e "
-        "mostra sua série histórica mês a mês. Serve tanto para inspecionar visualmente a "
-        "completude (lacunas na linha = meses sem registro) quanto para identificar possíveis "
-        "**inconsistências** nos dados (valores muito fora do padrão dos meses vizinhos), "
-        "complementando a visão agregada por percentual do Heatmap de Completude acima."
-    )
