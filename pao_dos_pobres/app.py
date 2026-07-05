@@ -9,6 +9,7 @@ import pandas as pd
 
 from utils.data import carregar_desdobramentos, carregar_gerencial
 from utils.style import CORES_SECAO, ANOS
+from utils.insights import resumo_geral
 
 # ── Configuração da página ────────────────────────────────────────────────────
 st.set_page_config(
@@ -60,6 +61,9 @@ st.markdown(
 )
 st.divider()
 
+# ── Resumo em palavras ────────────────────────────────────────────────────────
+st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_geral(df_filtrado)))
+
 # ── Métricas de resumo ────────────────────────────────────────────────────────
 col1, col2, col3, col4 = st.columns(4)
 
@@ -101,7 +105,7 @@ fig_ano.update_traces(
 )
 fig_ano.update_xaxes(tickmode="linear", dtick=1)
 fig_ano.update_layout(height=360, margin=dict(t=20, b=20))
-st.plotly_chart(fig_ano, width='stretch')
+st.plotly_chart(fig_ano, use_container_width=True)
 
 st.divider()
 
@@ -132,4 +136,4 @@ fig_secao.update_layout(
     margin=dict(t=20, b=20, l=10),
     yaxis=dict(autorange="reversed"),
 )
-st.plotly_chart(fig_secao, width='stretch')
+st.plotly_chart(fig_secao, use_container_width=True)

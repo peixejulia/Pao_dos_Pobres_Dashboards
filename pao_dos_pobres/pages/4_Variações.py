@@ -12,6 +12,7 @@ import pandas as pd
 
 from utils.data import carregar_desdobramentos
 from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE
+from utils.insights import resumo_variacoes
 
 st.set_page_config(page_title="Variações · LEM", layout="wide")
 
@@ -58,6 +59,9 @@ else:
     df_db["cor"] = df_db["variacao"].apply(lambda v: "#27ae60" if v >= 0 else "#c0392b")
     df_db = df_db.sort_values("variacao")
 
+    # ── Resumo em palavras ────────────────────────────────────────────────────
+    st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_variacoes(df_db, ano_a, ano_b)))
+
     fig_db = go.Figure()
 
     for _, row in df_db.iterrows():
@@ -93,13 +97,20 @@ else:
         yaxis=dict(title="", tickfont=dict(size=10)),
         legend=dict(orientation="h", y=-0.08),
     )
-    st.plotly_chart(fig_db, width='stretch')
+    st.plotly_chart(fig_db, use_container_width=True)
 
 st.divider()
 
 # ── VIZ 4B: Parallel Coordinates ──────────────────────────────────────────────
 st.subheader("Parallel Coordinates — Todos os anos simultaneamente")
 st.caption("Cada linha = um indicador. Passe o cursor para destacar. Linhas ascendentes = crescimento.")
+with st.expander("ℹ️ Como ler este gráfico"):
+    st.markdown(
+        "Cada **coluna vertical** é um ano. Cada **linha colorida** que atravessa as colunas "
+        "representa um indicador. Se a linha **sobe** de uma coluna para a próxima, o "
+        "indicador **cresceu** naquele ano; se **desce**, **caiu**. Linhas praticamente retas "
+        "indicam estabilidade ao longo do tempo."
+    )
 
 # Pivot: indicador × ano → volume
 df_pivot = df_anual.pivot_table(
@@ -146,7 +157,7 @@ fig_pc.update_layout(
     height=500,
     margin=dict(t=60, b=40, l=80, r=80),
 )
-st.plotly_chart(fig_pc, width='stretch')
+st.plotly_chart(fig_pc, use_container_width=True)
 
 # Tabela auxiliar com variação absoluta
 with st.expander("Ver tabela de variações"):
@@ -154,4 +165,4 @@ with st.expander("Ver tabela de variações"):
         tbl = df_db[["secao", "indicador", "vol_a", "vol_b", "variacao"]].copy()
         tbl.columns = ["Seção", "Indicador", str(ano_a), str(ano_b), "Variação"]
         tbl = tbl.sort_values("Variação", ascending=False).reset_index(drop=True)
-        st.dataframe(tbl, width='stretch')
+        st.dataframe(tbl, use_container_width=True)

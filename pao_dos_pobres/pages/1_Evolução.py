@@ -13,6 +13,7 @@ import numpy as np
 
 from utils.data import carregar_desdobramentos
 from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE
+from utils.insights import resumo_evolucao
 
 st.set_page_config(page_title="Evolução · LEM", layout="wide")
 
@@ -34,9 +35,18 @@ st.title("📈 Como os indicadores evoluíram?")
 st.markdown("**PQ1** · Análise da evolução temporal dos registros de 2021 a 2025.")
 st.divider()
 
+# ── Resumo em palavras ────────────────────────────────────────────────────────
+st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_evolucao(df_f)))
+
 # ── VIZ 1A: Streamgraph ───────────────────────────────────────────────────────
 st.subheader("Streamgraph — Fluxo de volume por seção")
 st.caption("Cada faixa representa uma seção temática. A largura indica o volume registrado em cada mês.")
+with st.expander("ℹ️ Como ler este gráfico"):
+    st.markdown(
+        "Cada faixa colorida é uma **seção temática**. Quanto **mais larga** a faixa em um "
+        "determinado mês, **mais registros** houve naquela seção. As faixas ficam empilhadas "
+        "umas sobre as outras — a altura total da pilha em cada ponto é o volume total daquele mês."
+    )
 
 # Pivot: data × secao → soma de valores
 df_stream = (
@@ -78,13 +88,20 @@ else:
         legend=dict(orientation="h", y=-0.18),
         hovermode="x unified",
     )
-    st.plotly_chart(fig_stream, width='stretch')
+    st.plotly_chart(fig_stream, use_container_width=True)
 
 st.divider()
 
 # ── VIZ 1B: Bump Chart ────────────────────────────────────────────────────────
 st.subheader("Bump Chart — Ranking de indicadores por ano")
 st.caption("A posição vertical indica o ranking do indicador dentro da seção selecionada. Linhas que sobem = crescimento relativo.")
+with st.expander("ℹ️ Como ler este gráfico"):
+    st.markdown(
+        "Cada linha colorida é um **indicador**. A posição vertical mostra a **posição no "
+        "ranking** daquele ano (1 = o indicador com mais registros naquele ano, dentro da "
+        "seção escolhida). Se a linha **sobe** ao longo dos anos, o indicador ganhou "
+        "importância relativa; se **desce**, perdeu espaço para outros indicadores."
+    )
 
 secao_bump = st.selectbox(
     "Seção para o Bump Chart",
@@ -145,4 +162,4 @@ else:
         ),
         legend=dict(orientation="v", x=1.02, y=1),
     )
-    st.plotly_chart(fig_bump, width='stretch')
+    st.plotly_chart(fig_bump, use_container_width=True)

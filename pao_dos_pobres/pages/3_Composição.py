@@ -11,6 +11,7 @@ import pandas as pd
 
 from utils.data import carregar_desdobramentos
 from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE
+from utils.insights import resumo_composicao
 
 st.set_page_config(page_title="Composição · LEM", layout="wide")
 
@@ -50,12 +51,21 @@ if df_agg.empty:
     st.info("Nenhum dado para os filtros selecionados.")
     st.stop()
 
+# ── Resumo em palavras ────────────────────────────────────────────────────────
+st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_composicao(df_agg)))
+
 # ── Abas: uma para cada tipo de gráfico ───────────────────────────────────────
 aba_sun, aba_tree = st.tabs(["☀️ Sunburst", "🗺️ Treemap"])
 
 # ── VIZ 3A: Sunburst ──────────────────────────────────────────────────────────
 with aba_sun:
     st.caption("Clique em uma seção para dar zoom nos seus indicadores.")
+    with st.expander("ℹ️ Como ler este gráfico"):
+        st.markdown(
+            "O **círculo interno** mostra as 4 seções temáticas. Cada **fatia externa** é um "
+            "indicador dentro daquela seção. **Fatias maiores** = mais registros. Clique em uma "
+            "fatia da seção para dar zoom e ver só os indicadores dela; clique no centro para voltar."
+        )
 
     fig_sun = px.sunburst(
         df_agg,
@@ -78,11 +88,17 @@ with aba_sun:
         ),
     )
     fig_sun.update_layout(height=560, margin=dict(t=20, b=10))
-    st.plotly_chart(fig_sun, width='stretch')
+    st.plotly_chart(fig_sun, use_container_width=True)
 
 # ── VIZ 3B: Treemap ───────────────────────────────────────────────────────────
 with aba_tree:
     st.caption("Tamanho de cada bloco proporcional ao volume acumulado.")
+    with st.expander("ℹ️ Como ler este gráfico"):
+        st.markdown(
+            "Cada **retângulo** é um indicador; o **tamanho** dele é proporcional ao volume "
+            "de registros — quanto maior o bloco, mais registros. Retângulos da **mesma cor** "
+            "pertencem à mesma seção temática."
+        )
 
     fig_tree = px.treemap(
         df_agg,
@@ -103,4 +119,4 @@ with aba_tree:
         textinfo="label+value",
     )
     fig_tree.update_layout(height=560, margin=dict(t=20, b=10))
-    st.plotly_chart(fig_tree, width='stretch')
+    st.plotly_chart(fig_tree, use_container_width=True)

@@ -13,6 +13,7 @@ import numpy as np
 
 from utils.data import carregar_desdobramentos
 from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE
+from utils.insights import resumo_sazonalidade
 
 st.set_page_config(page_title="Sazonalidade · LEM", layout="wide")
 
@@ -45,9 +46,13 @@ st.title("🌹 Sazonalidade dos Registros")
 st.markdown("**PQ2** · Quais meses concentram maior volume de atendimentos e atividades?")
 st.divider()
 
-# ── VIZ 2A: Gráfico de Rosa ───────────────────────────────────────────────────
-st.subheader("Gráfico de Rosa — Distribuição circular por mês")
-st.caption("Barras radiais representam o volume de cada mês. Linha pontilhada vermelha = média mensal.")
+# Guarda: sem Anos/Seções selecionados (ou combinação sem dados) não há o que mostrar
+if not anos or not secoes or df_viz.empty:
+    st.warning(
+        "⚠️ Nenhum dado para os filtros selecionados. "
+        "Marque pelo menos um **Ano** e uma **Seção** na barra lateral."
+    )
+    st.stop()
 
 df_mes = (
     df_viz
@@ -57,8 +62,21 @@ df_mes = (
     .reset_index(name="Volume")
 )
 df_mes["Volume"] = df_mes["Volume"].fillna(0)
-
 media = df_mes["Volume"].mean()
+
+# ── Resumo em palavras ────────────────────────────────────────────────────────
+st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_sazonalidade(df_mes)))
+
+# ── VIZ 2A: Gráfico de Rosa ───────────────────────────────────────────────────
+st.subheader("Gráfico de Rosa — Distribuição circular por mês")
+st.caption("Barras radiais representam o volume de cada mês. Linha pontilhada vermelha = média mensal.")
+with st.expander("ℹ️ Como ler este gráfico"):
+    st.markdown(
+        "Pense em um relógio: cada 'fatia' é um mês, começando em **Janeiro no topo** e "
+        "girando no sentido horário até Dezembro. Quanto **mais a barra se estende para fora** "
+        "do centro, **mais registros** aquele mês teve. A linha vermelha pontilhada marca a "
+        "**média** entre todos os meses — barras que passam dela tiveram volume acima da média."
+    )
 
 fig_rosa = go.Figure()
 
@@ -79,7 +97,9 @@ fig_rosa.add_trace(go.Barpolar(
 ))
 
 # Linha de média (círculo pontilhado)
-theta_circ = list(range(0, 361, 5))
+# Usa os mesmos rótulos categóricos do eixo (meses) para não misturar com
+# valores numéricos de grau, que quebrariam o eixo angular categórico.
+theta_circ = ORDEM_MES + [ORDEM_MES[0]]
 fig_rosa.add_trace(go.Scatterpolar(
     r=[media] * len(theta_circ),
     theta=theta_circ,
@@ -91,7 +111,12 @@ fig_rosa.add_trace(go.Scatterpolar(
 fig_rosa.update_layout(
     polar=dict(
         radialaxis=dict(visible=True, showticklabels=True, gridcolor="#DDDDDD"),
-        angularaxis=dict(direction="clockwise", rotation=90),
+        angularaxis=dict(
+            type="category",
+            categoryarray=ORDEM_MES,
+            direction="clockwise",
+            rotation=90,
+        ),
         bgcolor="white",
     ),
     legend=dict(orientation="h", y=-0.08, x=0.5, xanchor="center"),
@@ -99,7 +124,7 @@ fig_rosa.update_layout(
     height=500,
     margin=dict(t=20, b=60),
 )
-st.plotly_chart(fig_rosa, width='stretch')
+st.plotly_chart(fig_rosa, use_container_width=True)
 
 st.divider()
 
@@ -115,17 +140,23 @@ df_cal = (
 )
 
 # Pivot: linhas = ano, colunas = mês
-pivot_cal = df_cal.pivot(index="ano", columns="mes", values="Volume").reindex(
-    columns=ORDEM_MES
+# Reindexado pelos ANOS selecionados na barra lateral (não só pelos anos com dado),
+# assim um indicador que só existe em parte do período não derruba o gráfico.
+anos_disp = sorted(anos)
+pivot_cal = (
+    df_cal.pivot(index="ano", columns="mes", values="Volume")
+    .reindex(index=anos_disp, columns=ORDEM_MES)
 )
 
-anos_disp = sorted(pivot_cal.index)
 z = pivot_cal.values
-text_z = np.where(
-    np.isnan(z),
-    "—",
-    np.vectorize(lambda v: f"{int(v):,}".replace(",", "."))(np.nan_to_num(z))
-)
+if z.size == 0:
+    text_z = z
+else:
+    text_z = np.where(
+        np.isnan(z),
+        "—",
+        np.vectorize(lambda v: f"{int(v):,}".replace(",", "."))(np.nan_to_num(z))
+    )
 
 fig_cal = go.Figure(data=go.Heatmap(
     z=z,
@@ -150,4 +181,4 @@ fig_cal.update_layout(
     xaxis=dict(title="Mês"),
     yaxis=dict(title="Ano", tickmode="linear", dtick=1),
 )
-st.plotly_chart(fig_cal, width='stretch')
+st.plotly_chart(fig_cal, use_container_width=True)

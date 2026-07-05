@@ -13,6 +13,7 @@ import numpy as np
 
 from utils.data import carregar_desdobramentos
 from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE
+from utils.insights import resumo_completude
 
 st.set_page_config(page_title="Completude · LEM", layout="wide")
 
@@ -34,6 +35,14 @@ st.title("🔍 Qualidade e Completude")
 st.markdown("**PQ5** · Existem indicadores com registros ausentes, inconsistentes ou muito diferentes entre os anos?")
 st.divider()
 
+# Guarda: sem Anos/Seções selecionados não há o que mostrar
+if not anos or not secoes or df_f.empty:
+    st.warning(
+        "⚠️ Nenhum dado para os filtros selecionados. "
+        "Marque pelo menos um **Ano** e uma **Seção** na barra lateral."
+    )
+    st.stop()
+
 # ── VIZ 5A: Heatmap de Completude ─────────────────────────────────────────────
 st.subheader("Heatmap de Completude — % de meses preenchidos por indicador e ano")
 st.caption("Verde escuro = 100% dos meses preenchidos · Amarelo = parcial · Vermelho = ausência.")
@@ -46,6 +55,9 @@ pivot_comp = df_f.pivot_table(
 )
 # Ordenar: piores no topo
 pivot_comp = pivot_comp.loc[pivot_comp.mean(axis=1).sort_values().index]
+
+# ── Resumo em palavras ────────────────────────────────────────────────────────
+st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_completude(pivot_comp)))
 
 anos_disp = [str(c) for c in pivot_comp.columns]
 inds = list(pivot_comp.index)
@@ -81,7 +93,7 @@ fig_comp.update_layout(
     xaxis=dict(title="Ano", side="top"),
     yaxis=dict(title="", autorange="reversed", tickfont=dict(size=10)),
 )
-st.plotly_chart(fig_comp, width='stretch')
+st.plotly_chart(fig_comp, use_container_width=True)
 
 st.divider()
 
@@ -123,4 +135,4 @@ else:
     fig_strip.for_each_annotation(
         lambda a: a.update(text=a.text.split("=")[-1], font=dict(size=9))
     )
-    st.plotly_chart(fig_strip, width='stretch')
+    st.plotly_chart(fig_strip, use_container_width=True)
