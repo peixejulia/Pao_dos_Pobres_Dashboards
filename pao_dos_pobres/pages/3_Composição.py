@@ -62,9 +62,19 @@ with aba_sun:
     st.caption("Clique em uma seção para dar zoom nos seus indicadores.")
     with st.expander("ℹ️ Como ler este gráfico"):
         st.markdown(
-            "O **círculo interno** mostra as 4 seções temáticas. Cada **fatia externa** é um "
-            "indicador dentro daquela seção. **Fatias maiores** = mais registros. Clique em uma "
-            "fatia da seção para dar zoom e ver só os indicadores dela; clique no centro para voltar."
+            "**A ideia geral:** este gráfico mostra uma hierarquia em camadas circulares — "
+            "primeiro por seção, depois por indicador dentro dela.\n\n"
+            "**Camada interna (anel do meio):** cada fatia é uma das 4 **seções temáticas** "
+            "(Desdobramentos Técnicos, Educação, Profissionalização, Saúde), coloridas de "
+            "forma consistente com o restante do dashboard.\n\n"
+            "**Camada externa:** cada fatia menor é um **indicador** específico dentro "
+            "daquela seção. O **tamanho da fatia** (tanto na camada interna quanto na "
+            "externa) é proporcional ao **volume de registros** — fatias maiores = mais "
+            "registros.\n\n"
+            "**Interação:** clique em uma fatia da seção para dar **zoom** e ver só os "
+            "indicadores dela em detalhe; clique no centro do círculo para voltar à visão "
+            "completa. Passe o mouse sobre qualquer fatia para ver o volume exato e o "
+            "percentual que ela representa dentro da seção e do total geral."
         )
 
     fig_sun = px.sunburst(
@@ -95,9 +105,18 @@ with aba_tree:
     st.caption("Tamanho de cada bloco proporcional ao volume acumulado.")
     with st.expander("ℹ️ Como ler este gráfico"):
         st.markdown(
-            "Cada **retângulo** é um indicador; o **tamanho** dele é proporcional ao volume "
-            "de registros — quanto maior o bloco, mais registros. Retângulos da **mesma cor** "
-            "pertencem à mesma seção temática."
+            "**A ideia geral:** é a mesma informação do Sunburst (seção → indicador), só que "
+            "organizada como um mosaico de retângulos em vez de um círculo — pode ser mais "
+            "fácil de comparar tamanhos visualmente.\n\n"
+            "**O que o tamanho significa:** cada **retângulo** é um indicador; a **área** "
+            "dele é proporcional ao volume de registros — quanto **maior o bloco**, mais "
+            "registros aquele indicador teve. Blocos maiores chamam mais atenção porque "
+            "concentram mais volume.\n\n"
+            "**O que a cor significa:** retângulos da **mesma cor** pertencem à **mesma "
+            "seção temática** — isso ajuda a enxergar rapidamente quais seções dominam o "
+            "espaço total.\n\n"
+            "**Interação:** passe o mouse sobre qualquer bloco para ver o nome completo do "
+            "indicador, o volume exato e o percentual que ele representa dentro da sua seção."
         )
 
     fig_tree = px.treemap(

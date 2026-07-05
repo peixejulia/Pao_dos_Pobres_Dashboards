@@ -106,10 +106,21 @@ st.subheader("Parallel Coordinates — Todos os anos simultaneamente")
 st.caption("Cada linha = um indicador. Passe o cursor para destacar. Linhas ascendentes = crescimento.")
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
-        "Cada **coluna vertical** é um ano. Cada **linha colorida** que atravessa as colunas "
-        "representa um indicador. Se a linha **sobe** de uma coluna para a próxima, o "
-        "indicador **cresceu** naquele ano; se **desce**, **caiu**. Linhas praticamente retas "
-        "indicam estabilidade ao longo do tempo."
+        "**A ideia geral:** enquanto o Dumbbell Chart acima compara só dois anos, este "
+        "gráfico mostra **todos os anos ao mesmo tempo**, um indicador de cada vez, como um "
+        "conjunto de retas paralelas.\n\n"
+        "**Os eixos:** cada **coluna vertical** representa um **ano** (2021 a 2025, da "
+        "esquerda para a direita). A posição de um ponto na coluna é o **volume de "
+        "registros** daquele indicador naquele ano — mais para cima significa mais volume.\n\n"
+        "**As linhas:** cada **linha colorida** que atravessa as colunas representa um "
+        "**indicador**, e a cor indica a **seção** dele (veja a barra de cores à direita). "
+        "Se a linha **sobe** de uma coluna para a próxima, o indicador **cresceu** naquele "
+        "ano; se **desce**, **caiu**. Linhas praticamente retas (nem sobem nem descem muito) "
+        "indicam **estabilidade** ao longo do tempo.\n\n"
+        "**Dica de interação:** você pode **clicar e arrastar verticalmente sobre o eixo de "
+        "um ano específico** para criar um filtro — isso destaca só as linhas que passam "
+        "pela faixa de valores selecionada, útil para achar indicadores com volume alto ou "
+        "baixo num ano específico. Clique novamente no eixo para remover o filtro."
     )
 
 # Pivot: indicador × ano → volume

@@ -72,12 +72,20 @@ st.subheader("Gráfico de Rosa — Distribuição circular por mês e ano")
 st.caption("Uma cor por ano. Barras radiais representam o volume de cada mês. Linha pontilhada vermelha = média geral.")
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
-        "Pense em um relógio: cada 'fatia' é um mês, começando em **Janeiro no topo** e "
-        "girando no sentido horário até Dezembro. Dentro de cada fatia, há uma **barra por "
-        "ano** (cores diferentes) — compare as cores para ver se aquele mês cresceu ou caiu "
-        "de um ano para o outro. Quanto **mais a barra se estende para fora** do centro, "
-        "**mais registros** houve. A linha vermelha pontilhada marca a **média geral** "
-        "(todos os meses e anos)."
+        "**A ideia geral:** este é um gráfico de barras \"dobrado\" em círculo. Pense em um "
+        "relógio — cada fatia é um mês, começando em **Janeiro no topo** e girando no "
+        "sentido horário até **Dezembro**.\n\n"
+        "**O que cada cor significa:** dentro de cada fatia (mês) existem várias barrinhas "
+        "coloridas lado a lado, uma para **cada ano** (veja a legenda embaixo do gráfico). "
+        "Isso permite comparar o mesmo mês em anos diferentes — por exemplo, ver se Setembro "
+        "de 2025 teve mais atendimentos do que Setembro de 2021.\n\n"
+        "**O que o tamanho significa:** quanto **mais a barra se estende para fora do "
+        "centro** (mais \"comprida\"), **mais registros** houve naquele mês/ano. Os números "
+        "no eixo (0, 200, 400...) mostram a escala de volume.\n\n"
+        "**A linha vermelha pontilhada** marca a **média geral** de todos os meses e anos "
+        "juntos — barras que ultrapassam essa linha tiveram volume acima da média.\n\n"
+        "**Dica:** clique nos anos da legenda para esconder/mostrar só os anos que quiser "
+        "comparar; passe o mouse sobre uma barra para ver o valor exato."
     )
 
 # Volume por ano e mês (uma série/cor por ano)
@@ -88,7 +96,9 @@ df_ano_mes = (
     .reset_index(name="Volume")
 )
 
-PALETA_ANOS = ["#b3d9f2", "#7fb8e0", "#4a90c4", "#2E86AB", "#1a3a52"]
+# Cores bem diferenciáveis entre si (não são tons de uma mesma cor),
+# para facilitar a comparação visual entre anos.
+PALETA_ANOS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#8c564b"]
 anos_presentes = sorted(df_ano_mes["ano"].unique())
 cor_ano = {a: PALETA_ANOS[i % len(PALETA_ANOS)] for i, a in enumerate(anos_presentes)}
 

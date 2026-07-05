@@ -43,9 +43,18 @@ st.subheader("Streamgraph — Fluxo de volume por seção")
 st.caption("Cada faixa representa uma seção temática. A largura indica o volume registrado em cada mês.")
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
-        "Cada faixa colorida é uma **seção temática**. Quanto **mais larga** a faixa em um "
-        "determinado mês, **mais registros** houve naquela seção. As faixas ficam empilhadas "
-        "umas sobre as outras — a altura total da pilha em cada ponto é o volume total daquele mês."
+        "**A ideia geral:** o eixo horizontal é o tempo (de 2021 a 2025) e cada faixa "
+        "colorida representa uma **seção temática** (Desdobramentos Técnicos, Educação, "
+        "Profissionalização, Saúde).\n\n"
+        "**O que a largura significa:** quanto **mais larga/alta** a faixa em um determinado "
+        "mês, **mais registros** aquela seção teve naquele mês. Se uma faixa engorda ao "
+        "longo do tempo, aquela seção está crescendo; se afina, está encolhendo.\n\n"
+        "**Como as faixas se combinam:** elas ficam empilhadas umas sobre as outras — a "
+        "altura **total** da pilha em cada ponto do tempo é o volume total de registros "
+        "daquele mês, somando todas as seções.\n\n"
+        "**Dica:** passe o mouse sobre o gráfico para ver os valores exatos de cada seção "
+        "naquele mês; clique nos nomes das seções na legenda para ocultar/mostrar faixas "
+        "específicas e facilitar a comparação."
     )
 
 # Pivot: data × secao → soma de valores
@@ -97,10 +106,19 @@ st.subheader("Bump Chart — Ranking de indicadores por ano")
 st.caption("A posição vertical indica o ranking do indicador dentro da seção selecionada. Linhas que sobem = crescimento relativo.")
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
-        "Cada linha colorida é um **indicador**. A posição vertical mostra a **posição no "
-        "ranking** daquele ano (1 = o indicador com mais registros naquele ano, dentro da "
-        "seção escolhida). Se a linha **sobe** ao longo dos anos, o indicador ganhou "
-        "importância relativa; se **desce**, perdeu espaço para outros indicadores."
+        "**A ideia geral:** este gráfico não mostra o volume bruto de cada indicador, e sim "
+        "a **posição relativa** dele frente aos outros indicadores da mesma seção, ano a "
+        "ano — por isso o nome \"bump\" (\"solavanco\"), pelo formato de sobe-e-desce das linhas.\n\n"
+        "**O que o eixo vertical significa:** cada linha colorida representa um "
+        "**indicador**. A posição vertical em cada ano é o **ranking** dele naquele ano "
+        "dentro da seção escolhida (**1 no topo = o indicador com mais registros** "
+        "naquele ano; posições mais baixas = menos registros que os outros).\n\n"
+        "**Como interpretar o movimento:** se a linha de um indicador **sobe** de um ano "
+        "para o outro, ele ganhou importância relativa (subiu no ranking) mesmo que seu "
+        "volume absoluto não tenha mudado muito — o que importa aqui é a comparação com os "
+        "demais. Se **desce**, perdeu espaço para outros indicadores que cresceram mais.\n\n"
+        "**Dica:** passe o mouse sobre um ponto para ver o volume exato daquele indicador "
+        "naquele ano, além do ranking."
     )
 
 secao_bump = st.selectbox(
