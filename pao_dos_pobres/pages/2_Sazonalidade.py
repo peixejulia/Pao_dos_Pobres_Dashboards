@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
+from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_institucional
 from utils.insights import resumo_sazonalidade
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -103,9 +103,10 @@ df_ano_mes = (
     .reset_index(name="Volume")
 )
 
-# Cores bem diferenciáveis entre si (não são tons de uma mesma cor),
-# para facilitar a comparação visual entre anos.
-PALETA_ANOS = ["#1f77b4", "#ff7f0e", "#2ca02c", "#9467bd", "#8c564b"]
+# Paleta institucional (mesma usada em todo o dashboard) aplicada aos anos,
+# em vez de uma paleta genérica do Plotly — mantém consistência visual com
+# os demais gráficos.
+PALETA_ANOS = paleta_institucional(len(ANOS))
 anos_presentes = sorted(df_ano_mes["ano"].unique())
 cor_ano = {a: PALETA_ANOS[i % len(PALETA_ANOS)] for i, a in enumerate(anos_presentes)}
 

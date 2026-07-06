@@ -12,7 +12,7 @@ import plotly.express as px
 import pandas as pd
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
+from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_institucional
 from utils.insights import resumo_variacoes
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -200,12 +200,12 @@ else:
         f"Mostrando: {len(df_secao_sel)} indicador(es) da seção **{visao_selecionada}**, "
         "cada um com sua própria cor."
     )
-    paleta_indicadores = px.colors.qualitative.Dark24
+    paleta_indicadores = paleta_institucional(len(df_secao_sel))
 
     for i, (_, row) in enumerate(df_secao_sel.iterrows()):
         indicador = row["indicador"]
         y_vals = [row[a] for a in anos_cols]
-        cor = paleta_indicadores[i % len(paleta_indicadores)]
+        cor = paleta_indicadores[i]
 
         fig_pc.add_trace(go.Scatter(
             x=anos_cols,

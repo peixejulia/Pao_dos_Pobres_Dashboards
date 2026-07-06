@@ -3,12 +3,14 @@ Constantes de estilo compartilhadas entre todas as páginas.
 Importar com: from utils.style import CORES_SECAO, ORDEM_MES
 """
 
-# Paleta de cores por seção temática (usada em todos os gráficos)
+# Paleta de cores por seção temática (usada em todos os gráficos) — alinhada
+# com a paleta harmônica institucional definida em _CORES_HARMONICAS abaixo,
+# pensada para combinar com o azul do logo sem ser tudo em tons de azul.
 CORES_SECAO = {
-    "Desdobramentos Técnicos": "#2E86AB",
-    "Educação":                "#A23B72",
-    "Profissionalização":      "#F18F01",
-    "Saúde":                   "#C73E1D",
+    "Desdobramentos Técnicos": "#105F7D",  # azul petróleo (institucional)
+    "Educação":                "#545B4D",  # oliva escuro
+    "Profissionalização":      "#8F5601",  # mostarda escura
+    "Saúde":                   "#712525",  # vinho/marsala escuro
 }
 
 # Ordem canônica dos meses (para eixos e reindexação)
@@ -22,6 +24,7 @@ ANOS = [2021, 2022, 2023, 2024, 2025]
 PLOTLY_TEMPLATE = "plotly_white"
 
 import base64
+import colorsys
 from pathlib import Path
 import streamlit as st
 
@@ -63,3 +66,60 @@ def explicacao_grafico(texto: str) -> None:
     o gráfico em si, mas continuar sempre visível (sem exigir clique).
     """
     st.caption(texto)
+
+
+# Paleta harmônica institucional — âncora no azul da Fundação (mesma família
+# do CORES_SECAO acima) somada a tons terrosos/complementares (terracota,
+# dourado, sálvia, rosa-velho etc.), inspirada em referências de paletas
+# "editoriais" que combinam azuis petróleo/marinho com neutros quentes.
+# Importante: NÃO é uma paleta monocromática de azul — é pensada para ficar
+# visualmente agradável AO LADO do azul do logo, com bastante variedade.
+_CORES_HARMONICAS = [
+    "#105F7D",  # azul petróleo (institucional)
+    "#712525",  # vinho/marsala escuro
+    "#8F5601",  # mostarda escura
+    "#545B4D",  # oliva escuro
+    "#92A69C",  # sálvia
+    "#404A54",  # slate azul-acinzentado
+    "#D1A79B",  # rosa-velho
+    "#14243A",  # azul-marinho escuro
+    "#AD7979",  # vinho claro (tom mais claro do vinho/marsala acima)
+    "#B79864",  # dourado/mostarda (tom mais claro da mostarda acima)
+    "#828C77",  # verde-oliva acinzentado (tom mais claro do oliva escuro acima)
+]
+
+
+def _ajustar_luminosidade(hex_cor: str, delta: float) -> str:
+    """Clareia (delta > 0) ou escurece (delta < 0) uma cor hex, mantendo o matiz."""
+    hex_cor = hex_cor.lstrip("#")
+    r, g, b = (int(hex_cor[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    h, l, s = colorsys.rgb_to_hls(r, g, b)
+    l = min(0.88, max(0.12, l + delta))
+    r, g, b = colorsys.hls_to_rgb(h, l, s)
+    return "#{:02x}{:02x}{:02x}".format(round(r * 255), round(g * 255), round(b * 255))
+
+
+def paleta_institucional(n: int) -> list:
+    """
+    Gera `n` cores a partir da paleta harmônica institucional (_CORES_HARMONICAS)
+    — usada em gráficos com muitos indicadores diferentes (ex.: Bump Chart, o
+    "Ver por indicador" da página Variações), no lugar de paletas nativas do
+    Plotly (Alphabet, Dark24 etc.) que costumam ficar berrantes e cansativas.
+
+    Para n <= len(_CORES_HARMONICAS) (tamanho da paleta base), usa as cores na
+    ordem definida. Para n maior, reaproveita as mesmas cores em versões mais
+    claras/escuras, em vez de inventar tons novos desconectados da identidade
+    visual.
+    """
+    total_base = len(_CORES_HARMONICAS)
+    cores = []
+    for i in range(n):
+        base = _CORES_HARMONICAS[i % total_base]
+        volta = i // total_base
+        if volta == 0:
+            cores.append(base)
+        else:
+            passo = 0.14 * ((volta + 1) // 2)
+            delta = passo if volta % 2 else -passo
+            cores.append(_ajustar_luminosidade(base, delta))
+    return cores

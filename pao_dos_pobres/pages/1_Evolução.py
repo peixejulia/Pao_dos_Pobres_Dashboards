@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
+from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_institucional
 from utils.insights import resumo_evolucao
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -157,8 +157,7 @@ else:
     ).astype(int)
 
     indicadores = df_bump["indicador"].unique()
-    n_cores = len(indicadores)
-    paleta = px.colors.qualitative.Safe[:n_cores] if n_cores <= 11 else px.colors.qualitative.Alphabet[:n_cores]
+    paleta = paleta_institucional(len(indicadores))
     cor_ind = dict(zip(indicadores, paleta))
 
     fig_bump = go.Figure()
