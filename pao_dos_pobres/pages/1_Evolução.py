@@ -31,7 +31,7 @@ df_f = df[df["ano"].isin(anos) & df["secao"].isin(secoes)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
 titulo_com_logo("Evolução dos Indicadores")
-st.markdown(f"**PQ1** · Análise da evolução temporal dos registros de {min(ANOS)} a {max(ANOS)}.")
+st.markdown(f"Análise da evolução temporal dos registros de {min(ANOS)} a {max(ANOS)}.")
 st.divider()
 
 # ── Resumo em palavras ────────────────────────────────────────────────────────

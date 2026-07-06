@@ -29,7 +29,7 @@ df_f = df[df["ano"].isin(anos) & df["secao"].isin(secoes)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
 titulo_com_logo("Composição por Área Temática")
-st.markdown("**PQ3** · Quais seções e indicadores concentram o maior volume de registros?")
+st.markdown("Quais seções e indicadores concentram o maior volume de registros?")
 st.divider()
 
 # ── Dados agregados ───────────────────────────────────────────────────────────

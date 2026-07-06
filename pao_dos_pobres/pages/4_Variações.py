@@ -30,7 +30,7 @@ df_f = df[df["secao"].isin(secoes)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
 titulo_com_logo("Variações entre Anos")
-st.markdown("**PQ4** · Quais indicadores apresentaram maiores variações entre os anos?")
+st.markdown("Quais indicadores apresentaram maiores variações entre os anos?")
 st.divider()
 
 # ── Dados anuais por indicador ────────────────────────────────────────────────

@@ -31,7 +31,7 @@ df_f = df[df["secao"].isin(secoes) & df["ano"].isin(anos)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
 titulo_com_logo("Qualidade e Completude")
-st.markdown("**PQ5** · Existem indicadores com registros ausentes, inconsistentes ou muito diferentes entre os anos?")
+st.markdown("Existem indicadores com registros ausentes, inconsistentes ou muito diferentes entre os anos?")
 st.divider()
 
 # Guarda: sem Anos/Seções selecionados não há o que mostrar

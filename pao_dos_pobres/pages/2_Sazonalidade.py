@@ -42,7 +42,7 @@ else:
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
 titulo_com_logo("Sazonalidade dos Registros")
-st.markdown("**PQ2** · Quais meses concentram maior volume de atendimentos e atividades?")
+st.markdown("Quais meses concentram maior volume de atendimentos e atividades?")
 st.divider()
 
 # Guarda: sem Anos/Seções selecionados (ou combinação sem dados) não há o que mostrar
