@@ -17,6 +17,7 @@ de cada decisão.
 """
 from __future__ import annotations
 
+import io
 import re
 from dataclasses import dataclass, field
 from typing import BinaryIO, Union
@@ -140,6 +141,8 @@ def parse_lem_file(arquivo: ArquivoTipo, ano: int, unidade: str, nome_exibicao: 
     retorno de st.file_uploader ou um BytesIO baixado do GitHub).
     """
     nome_exibicao = nome_exibicao or str(arquivo)
+    if isinstance(arquivo, bytes):
+        arquivo = io.BytesIO(arquivo)
     try:
         df_raw = pd.read_excel(arquivo, sheet_name="Planilha1", header=None)
     except ValueError as e:
@@ -253,6 +256,8 @@ def parse_lem_anual_2025(arquivo: ArquivoTipo, ano: int = 2025, nome_exibicao: s
     equivalente para outros anos além de 2025.
     """
     nome_exibicao = nome_exibicao or str(arquivo)
+    if isinstance(arquivo, bytes):
+        arquivo = io.BytesIO(arquivo)
 
     # Como vamos ler a mesma origem duas vezes (duas abas), se for um
     # objeto tipo-arquivo precisamos garantir que o cursor volte ao início
