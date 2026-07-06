@@ -41,6 +41,44 @@ st.markdown(
     "que alimentam o painel. Qualquer mudança aqui atualiza o site público "
     "automaticamente em cerca de 1 minuto."
 )
+
+with st.expander("ℹ️ Como usar esta página (leia antes de começar)", expanded=True):
+    st.markdown(
+        "**O que é \"Unidade\"?** É a casa/unidade física da Fundação que gerou "
+        "aquela planilha (caso existam várias casas reportando separadamente). "
+        "Hoje todos os dados históricos usam **`unidade_1`** — a não ser que "
+        "você tenha certeza de que o arquivo é de uma casa diferente, **deixe "
+        "sempre `unidade_1`**.\n\n"
+        "---\n\n"
+        "**Passo a passo — Adicionar ou substituir uma planilha anual:**\n"
+        "1. Vá na aba **\"📅 Planilhas anuais por unidade\"** abaixo.\n"
+        "2. Em **Ano**, escolha o ano da planilha (ex.: 2026).\n"
+        "3. Em **Unidade**, deixe `unidade_1` (a não ser que saiba que é outra).\n"
+        "4. Clique em **Upload** e escolha o arquivo Excel (.xlsx) no seu computador.\n"
+        "5. Confira a mensagem de prévia (\"Planilha lida com sucesso: X registros "
+        "encontrados\"). Se aparecer um erro em vermelho, pare e peça ajuda antes "
+        "de continuar.\n"
+        "6. Clique em **\"✅ Confirmar e publicar\"** e aguarde a mensagem de "
+        "sucesso — o site público reinicia sozinho em seguida (leva uns 30 a "
+        "60 segundos).\n"
+        "7. Se já existia uma planilha para o mesmo ano e unidade, ela é "
+        "**substituída automaticamente** pela nova — não duplica dados.\n\n"
+        "**Passo a passo — Excluir uma planilha:**\n"
+        "1. Encontre a planilha na lista em **\"Planilhas atualmente no "
+        "painel\"**.\n"
+        "2. Clique em **\"🗑️ Excluir\"** ao lado dela.\n"
+        "3. Confirme clicando em **\"Sim, excluir\"**. O painel público é "
+        "recalculado sem os dados daquele ano/unidade.\n\n"
+        "**Passo a passo — Arquivo gerencial anual (indicadores de efetividade "
+        "e atividades culturais):**\n"
+        "1. Vá na aba **\"📊 Arquivo gerencial anual\"**.\n"
+        "2. Em **Ano**, informe o ano do arquivo (ex.: 2025).\n"
+        "3. Clique em **Upload** e escolha o arquivo **\"LEM anual completo\"**.\n"
+        "4. Confira a prévia e clique em **\"✅ Confirmar e publicar\"**.\n\n"
+        "**Dica geral:** faça um arquivo de cada vez e espere a publicação "
+        "terminar antes de subir o próximo."
+    )
+
 st.divider()
 
 # ── Portão de senha ─────────────────────────────────────────────────────────
