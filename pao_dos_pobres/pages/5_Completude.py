@@ -59,6 +59,13 @@ pivot_comp = df_f.pivot_table(
     columns="ano",
     values="valor",
     aggfunc=lambda x: round(x.notna().mean() * 100, 1),
+    # fill_value=0: quando um indicador não tem NENHUM registro em um ano
+    # (o campo nem existia na planilha daquele ano — ex.: "Aguardando Vaga"
+    # em 2023), a completude real é 0% dos meses esperados, não "sem dado".
+    # Sem isso, o pivot_table deixava a célula como NaN, que aparecia como
+    # "NaN%" no tooltip — um valor tecnicamente correto (ausência de grupo)
+    # mas visualmente parecia bug e não comunicava a métrica corretamente.
+    fill_value=0,
 )
 # Ordenar: piores no topo
 pivot_comp = pivot_comp.loc[pivot_comp.mean(axis=1).sort_values().index]
