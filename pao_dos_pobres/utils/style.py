@@ -7,10 +7,10 @@ Importar com: from utils.style import CORES_SECAO, ORDEM_MES
 # com a paleta harmônica institucional definida em _CORES_HARMONICAS abaixo,
 # pensada para combinar com o azul do logo sem ser tudo em tons de azul.
 CORES_SECAO = {
-    "Desdobramentos Técnicos": "#105F7D",  # azul petróleo (institucional)
-    "Educação":                "#545B4D",  # oliva escuro
-    "Profissionalização":      "#8F5601",  # mostarda escura
-    "Saúde":                   "#712525",  # vinho/marsala escuro
+    "Desdobramentos Técnicos": "#257C9D",  # azul petróleo (institucional)
+    "Educação":                "#6B8D49",  # oliva
+    "Profissionalização":      "#DE9B35",  # mostarda
+    "Saúde":                   "#BA3B3B",  # vinho/marsala
 }
 
 # Ordem canônica dos meses (para eixos e reindexação)
@@ -75,17 +75,17 @@ def explicacao_grafico(texto: str) -> None:
 # Importante: NÃO é uma paleta monocromática de azul — é pensada para ficar
 # visualmente agradável AO LADO do azul do logo, com bastante variedade.
 _CORES_HARMONICAS = [
-    "#105F7D",  # azul petróleo (institucional)
-    "#712525",  # vinho/marsala escuro
-    "#8F5601",  # mostarda escura
-    "#545B4D",  # oliva escuro
-    "#92A69C",  # sálvia
-    "#404A54",  # slate azul-acinzentado
-    "#D1A79B",  # rosa-velho
-    "#14243A",  # azul-marinho escuro
-    "#AD7979",  # vinho claro (tom mais claro do vinho/marsala acima)
-    "#B79864",  # dourado/mostarda (tom mais claro da mostarda acima)
-    "#828C77",  # verde-oliva acinzentado (tom mais claro do oliva escuro acima)
+    "#257C9D",  # azul petróleo (institucional)
+    "#BA3B3B",  # vinho/marsala
+    "#DE9B35",  # mostarda
+    "#6B8D49",  # oliva
+    "#6FAE8F",  # sálvia
+    "#50667C",  # slate azul-acinzentado
+    "#CF8B77",  # rosa-velho / terracota
+    "#1A3861",  # azul-marinho escuro
+    "#CD8484",  # vinho claro (tom mais claro do vinho/marsala acima)
+    "#E1C498",  # dourado claro (tom mais claro da mostarda acima)
+    "#AAC28E",  # oliva claro (tom mais claro do oliva acima)
 ]
 
 
