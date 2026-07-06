@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo
+from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_evolucao
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -38,7 +38,7 @@ st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_evolucao(df_f)))
 
 # ── VIZ 1A: Streamgraph ───────────────────────────────────────────────────────
 st.subheader("Streamgraph — Fluxo de volume por seção")
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele cruza três informações ao mesmo tempo — o "
     "tempo (mês a mês, de 2021 a 2025), a seção temática e o volume de registros. Serve "
     "para identificar **tendências de crescimento ou queda de cada seção** ao longo do "
@@ -108,7 +108,7 @@ st.divider()
 
 # ── VIZ 1B: Bump Chart ────────────────────────────────────────────────────────
 st.subheader("Bump Chart — Ranking de indicadores por ano")
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** dentro da seção escolhida acima, ele analisa como "
     "o **ranking de importância de cada indicador mudou ano a ano**. Diferente do "
     "Streamgraph, o foco aqui não é o volume absoluto, e sim a posição relativa — é útil "

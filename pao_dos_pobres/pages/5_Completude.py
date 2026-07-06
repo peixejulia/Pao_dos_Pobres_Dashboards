@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo
+from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_completude
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -43,7 +43,7 @@ if not anos or not secoes or df_f.empty:
 
 # ── VIZ 5A: Heatmap de Completude ─────────────────────────────────────────────
 st.subheader("Heatmap de Completude — % de meses preenchidos por indicador e ano")
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele mede a **qualidade/completude dos dados** — "
     "para cada indicador e ano, calcula o percentual de meses que realmente têm um valor "
     "registrado (em vez de estarem em branco). É essencial para interpretar corretamente os "
@@ -104,7 +104,7 @@ st.divider()
 
 # ── VIZ 5B: Gráfico de Linha — evolução mensal de um indicador ────────────────
 st.subheader("Evolução mensal de um indicador")
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele foca em **um único indicador por vez** e "
     "mostra sua série histórica mês a mês. Serve tanto para inspecionar visualmente a "
     "completude (lacunas na linha = meses sem registro) quanto para identificar possíveis "

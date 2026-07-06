@@ -3,7 +3,8 @@ Página 4 — Quais indicadores variaram mais entre anos?
 
 Visualizações:
   • Dumbbell Chart         — comparação direta entre dois anos
-  • Parallel Coordinates   — todos os anos simultaneamente
+  • Evolução multianual    — todos os anos simultaneamente, com seletor para
+                             ver agregado por seção ou detalhado por indicador
 """
 import streamlit as st
 import plotly.graph_objects as go
@@ -11,7 +12,7 @@ import plotly.express as px
 import pandas as pd
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo
+from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_variacoes
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -45,7 +46,7 @@ df_anual = (
 
 # ── VIZ 4A: Dumbbell Chart ────────────────────────────────────────────────────
 st.subheader(f"Dumbbell Chart — {ano_a} vs {ano_b}")
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele compara, indicador por indicador, o volume "
     "registrado nos **dois anos específicos** escolhidos na barra lateral. Responde "
     "diretamente à pergunta: quais indicadores mais **cresceram ou caíram** entre esses "
@@ -107,13 +108,14 @@ st.divider()
 
 # ── VIZ 4B: Evolução multianual por indicador ─────────────────────────────────
 st.subheader("Evolução multianual — Todos os anos simultaneamente")
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele expande a análise do Dumbbell Chart acima para "
     "**todos os 5 anos ao mesmo tempo**, permitindo ver a trajetória completa de cada "
     "indicador, não só o ponto de partida e o de chegada. É útil para identificar **padrões "
     "de crescimento consistente**, **quedas pontuais isoladas** (que passariam despercebidas "
     "numa comparação de só dois anos) ou **instabilidade** ao longo de todo o período "
-    "analisado, por seção (indicada pela cor)."
+    "analisado. Use o seletor **\"Ver por\"** abaixo para alternar entre uma visão "
+    "agregada por seção ou o detalhe de cada indicador dentro de uma seção específica."
 )
 
 with st.expander("ℹ️ Como ler este gráfico"):
@@ -126,12 +128,17 @@ with st.expander("ℹ️ Como ler este gráfico"):
         "então **subir de verdade significa mais volume** — diferente de um Parallel "
         "Coordinates \"clássico\", que reescala cada ano de forma independente e pode "
         "distorcer essa leitura.\n\n"
-        "**As linhas e cores:** cada linha é um **indicador**, e a cor indica a **seção** "
-        "dele — a mesma paleta usada nos outros gráficos do painel.\n\n"
-        "**Dica de interação:** clique no nome de uma seção na legenda à direita para "
-        "**esconder ou mostrar todas as linhas daquela seção de uma vez** — útil para "
-        "isolar visualmente uma seção específica. Para filtrar quais seções aparecem no "
-        "gráfico desde o início, use a caixa **\"Seções\"** na barra lateral."
+        "**O seletor \"Ver por\":**\n"
+        "- **Todas as seções** — mostra uma cor por **seção** (4 cores), útil pra comparar "
+        "o comportamento geral das 4 grandes áreas.\n"
+        "- **Uma seção específica** (ex.: \"Educação\") — mostra só os indicadores daquela "
+        "seção, cada um com sua **própria cor e entrada na legenda**, útil pra investigar "
+        "o comportamento de cada indicador individualmente sem competir visualmente com "
+        "as outras seções.\n\n"
+        "**Dica de interação:** clique num nome na legenda à direita para **esconder ou "
+        "mostrar aquela linha (ou seção, no modo agregado) individualmente**. Para filtrar "
+        "quais seções entram no gráfico desde o início, use a caixa **\"Seções\"** na "
+        "barra lateral."
     )
 
 # Pivot: indicador × ano → volume
@@ -143,34 +150,77 @@ df_pivot.columns = [str(c) for c in df_pivot.columns]
 
 anos_cols = [str(a) for a in ANOS if str(a) in df_pivot.columns]
 
-escala_log = st.checkbox(
-    "Usar escala logarítmica no eixo vertical (ajuda a ver indicadores de baixo volume "
-    "que ficam \"achatados\" perto do zero ao lado de indicadores muito maiores)",
-    value=False,
-)
+VISAO_AGREGADA = "Todas as seções (comparar por seção)"
+opcoes_visao = [VISAO_AGREGADA] + sorted(df_pivot["secao"].unique())
+
+col_visao, col_escala = st.columns([2, 1])
+with col_visao:
+    visao_selecionada = st.selectbox(
+        "Ver por:",
+        opcoes_visao,
+        index=0,
+        help="Escolha uma seção específica para colorir e nomear cada indicador individualmente.",
+    )
+with col_escala:
+    escala_log = st.checkbox(
+        "Escala logarítmica",
+        value=False,
+        help="Ajuda a ver indicadores de baixo volume que ficam \"achatados\" perto do "
+        "zero ao lado de indicadores muito maiores.",
+    )
 
 fig_pc = go.Figure()
-secoes_ja_na_legenda = set()
 
-for _, row in df_pivot.sort_values("secao").iterrows():
-    secao = row["secao"]
-    y_vals = [row[a] for a in anos_cols]
-    primeira_da_secao = secao not in secoes_ja_na_legenda
-    secoes_ja_na_legenda.add(secao)
+if visao_selecionada == VISAO_AGREGADA:
+    st.caption("Mostrando: comparação agregada por seção (uma cor por seção).")
+    secoes_ja_na_legenda = set()
+    for _, row in df_pivot.sort_values("secao").iterrows():
+        secao = row["secao"]
+        y_vals = [row[a] for a in anos_cols]
+        primeira_da_secao = secao not in secoes_ja_na_legenda
+        secoes_ja_na_legenda.add(secao)
 
-    fig_pc.add_trace(go.Scatter(
-        x=anos_cols,
-        y=y_vals,
-        mode="lines+markers",
-        line=dict(color=CORES_SECAO.get(secao, "#888888"), width=3),
-        marker=dict(size=6),
-        opacity=0.65,
-        name=secao,
-        legendgroup=secao,
-        showlegend=primeira_da_secao,
-        text=[row["indicador"]] * len(anos_cols),
-        hovertemplate="<b>%{text}</b><br>%{x}: %{y:,.0f}<extra></extra>",
-    ))
+        fig_pc.add_trace(go.Scatter(
+            x=anos_cols,
+            y=y_vals,
+            mode="lines+markers",
+            line=dict(color=CORES_SECAO.get(secao, "#888888"), width=3),
+            marker=dict(size=6),
+            opacity=0.65,
+            name=secao,
+            legendgroup=secao,
+            showlegend=primeira_da_secao,
+            text=[row["indicador"]] * len(anos_cols),
+            hovertemplate="<b>%{text}</b><br>%{x}: %{y:,.0f}<extra></extra>",
+        ))
+    titulo_legenda = "Seção"
+else:
+    df_secao_sel = df_pivot[df_pivot["secao"] == visao_selecionada].sort_values("indicador")
+    st.caption(
+        f"Mostrando: {len(df_secao_sel)} indicador(es) da seção **{visao_selecionada}**, "
+        "cada um com sua própria cor."
+    )
+    paleta_indicadores = px.colors.qualitative.Dark24
+
+    for i, (_, row) in enumerate(df_secao_sel.iterrows()):
+        indicador = row["indicador"]
+        y_vals = [row[a] for a in anos_cols]
+        cor = paleta_indicadores[i % len(paleta_indicadores)]
+
+        fig_pc.add_trace(go.Scatter(
+            x=anos_cols,
+            y=y_vals,
+            mode="lines+markers",
+            line=dict(color=cor, width=3),
+            marker=dict(size=6),
+            opacity=0.85,
+            name=indicador,
+            legendgroup=indicador,
+            showlegend=True,
+            text=[indicador] * len(anos_cols),
+            hovertemplate="<b>%{text}</b><br>%{x}: %{y:,.0f}<extra></extra>",
+        ))
+    titulo_legenda = "Indicador"
 
 fig_pc.update_layout(
     template=PLOTLY_TEMPLATE,
@@ -178,7 +228,7 @@ fig_pc.update_layout(
     margin=dict(t=40, b=40, l=60, r=40),
     xaxis=dict(title="Ano", type="category"),
     yaxis=dict(title="Volume anual", type="log" if escala_log else "linear"),
-    legend=dict(title="Seção", groupclick="togglegroup"),
+    legend=dict(title=titulo_legenda, groupclick="togglegroup"),
 )
 st.plotly_chart(fig_pc, use_container_width=True)
 

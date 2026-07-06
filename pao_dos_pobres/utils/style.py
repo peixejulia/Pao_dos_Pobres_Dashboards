@@ -54,3 +54,12 @@ def titulo_com_logo(texto: str, nivel: int = 1) -> None:
         f'</div>',
         unsafe_allow_html=True,
     )
+
+
+def explicacao_grafico(texto: str) -> None:
+    """
+    Renderiza o texto "📌 O que este gráfico mostra" de forma discreta —
+    fonte menor e cinza (via st.caption), pra não competir visualmente com
+    o gráfico em si, mas continuar sempre visível (sem exigir clique).
+    """
+    st.caption(texto)

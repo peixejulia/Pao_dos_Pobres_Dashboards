@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo
+from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_sazonalidade
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -67,7 +67,7 @@ st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_sazonalidade(df_m
 
 # ── VIZ 2A: Gráfico de Rosa ───────────────────────────────────────────────────
 st.subheader("Gráfico de Rosa — Distribuição circular por mês e ano")
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele analisa a **sazonalidade** dos registros, "
     "cruzando o mês do ano com o ano civil — ou seja, mostra o volume mês a mês, ano a ano, "
     "só que organizado em círculo em vez de em linha do tempo. Ele ajuda a responder: "
@@ -164,7 +164,7 @@ st.divider()
 
 # ── VIZ 2B: Calendar Heatmap ──────────────────────────────────────────────────
 st.subheader("Calendar Heatmap — Volume por ano e mês")
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** é a mesma informação de ano × mês do Gráfico de "
     "Rosa acima, só que em formato de tabela colorida, o que facilita a leitura de **números "
     "exatos** e a localização rápida de combinações específicas de ano e mês. Células cinzas "

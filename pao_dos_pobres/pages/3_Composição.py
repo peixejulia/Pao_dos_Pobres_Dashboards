@@ -10,7 +10,7 @@ import plotly.express as px
 import pandas as pd
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo
+from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_composicao
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -57,7 +57,7 @@ aba_sun, aba_tree = st.tabs(["☀️ Sunburst", "🗺️ Treemap"])
 
 # ── VIZ 3A: Sunburst ──────────────────────────────────────────────────────────
 with aba_sun:
-    st.markdown(
+    explicacao_grafico(
         "**📌 O que este gráfico mostra:** ele analisa a **composição** do volume total de "
         "registros em duas camadas — primeiro por seção temática, depois por indicador dentro "
         "de cada seção. Mostra que fatia do total cada seção e cada indicador representam, "
@@ -107,7 +107,7 @@ with aba_sun:
 
 # ── VIZ 3B: Treemap ───────────────────────────────────────────────────────────
 with aba_tree:
-    st.markdown(
+    explicacao_grafico(
         "**📌 O que este gráfico mostra:** é a mesma análise de composição do Sunburst "
         "(seção → indicador), mas em formato de blocos retangulares, o que facilita "
         "**comparar visualmente o tamanho** de indicadores de seções diferentes lado a lado — "

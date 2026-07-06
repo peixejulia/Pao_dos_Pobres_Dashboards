@@ -7,7 +7,7 @@ import plotly.express as px
 import pandas as pd
 
 from utils.data import carregar_desdobramentos, carregar_gerencial
-from utils.style import CORES_SECAO, ANOS, titulo_com_logo
+from utils.style import CORES_SECAO, ANOS, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_geral
 
 # ── Carregamento de dados ─────────────────────────────────────────────────────
@@ -74,7 +74,7 @@ st.divider()
 # ── Gráfico: volume total por ano ─────────────────────────────────────────────
 st.subheader("Volume total por ano")
 
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** aqui somamos **todos** os registros do LEM (todas as "
     "seções e indicadores juntos) por ano, dando uma visão panorâmica de como o volume total "
     "de atendimentos e atividades da Fundação evoluiu de 2021 a 2025. É o ponto de partida "
@@ -112,7 +112,7 @@ st.divider()
 # ── Gráfico: volume por seção ─────────────────────────────────────────────────
 st.subheader("Volume por seção temática")
 
-st.markdown(
+explicacao_grafico(
     "**📌 O que este gráfico mostra:** aqui os registros de **todo o período** (2021–2025) "
     "são somados e agrupados pelas 4 seções temáticas do LEM (Desdobramentos Técnicos, "
     "Educação, Profissionalização e Saúde). Ele responde à pergunta: qual área da instituição "
