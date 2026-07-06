@@ -105,8 +105,8 @@ else:
 
 st.divider()
 
-# ── VIZ 4B: Parallel Coordinates ──────────────────────────────────────────────
-st.subheader("Parallel Coordinates — Todos os anos simultaneamente")
+# ── VIZ 4B: Evolução multianual por indicador ─────────────────────────────────
+st.subheader("Evolução multianual — Todos os anos simultaneamente")
 st.markdown(
     "**📌 O que este gráfico mostra:** ele expande a análise do Dumbbell Chart acima para "
     "**todos os 5 anos ao mesmo tempo**, permitindo ver a trajetória completa de cada "
@@ -120,19 +120,18 @@ with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
         "**A ideia geral:** enquanto o Dumbbell Chart acima compara só dois anos, este "
         "gráfico mostra **todos os anos ao mesmo tempo**, um indicador de cada vez, como um "
-        "conjunto de retas paralelas.\n\n"
-        "**Os eixos:** cada **coluna vertical** representa um **ano** (2021 a 2025, da "
-        "esquerda para a direita). A posição de um ponto na coluna é o **volume de "
-        "registros** daquele indicador naquele ano — mais para cima significa mais volume.\n\n"
-        "**As linhas:** cada **linha colorida** que atravessa as colunas representa um "
-        "**indicador**, e a cor indica a **seção** dele (veja a barra de cores à direita). "
-        "Se a linha **sobe** de uma coluna para a próxima, o indicador **cresceu** naquele "
-        "ano; se **desce**, **caiu**. Linhas praticamente retas (nem sobem nem descem muito) "
-        "indicam **estabilidade** ao longo do tempo.\n\n"
-        "**Dica de interação:** você pode **clicar e arrastar verticalmente sobre o eixo de "
-        "um ano específico** para criar um filtro — isso destaca só as linhas que passam "
-        "pela faixa de valores selecionada, útil para achar indicadores com volume alto ou "
-        "baixo num ano específico. Clique novamente no eixo para remover o filtro."
+        "conjunto de linhas.\n\n"
+        "**Os eixos:** o eixo horizontal é o **ano** (2021 a 2025) e o eixo vertical é o "
+        "**volume de registros**. Todos os anos compartilham a mesma escala vertical, "
+        "então **subir de verdade significa mais volume** — diferente de um Parallel "
+        "Coordinates \"clássico\", que reescala cada ano de forma independente e pode "
+        "distorcer essa leitura.\n\n"
+        "**As linhas e cores:** cada linha é um **indicador**, e a cor indica a **seção** "
+        "dele — a mesma paleta usada nos outros gráficos do painel.\n\n"
+        "**Dica de interação:** clique no nome de uma seção na legenda à direita para "
+        "**esconder ou mostrar todas as linhas daquela seção de uma vez** — útil para "
+        "isolar visualmente uma seção específica. Para filtrar quais seções aparecem no "
+        "gráfico desde o início, use a caixa **\"Seções\"** na barra lateral."
     )
 
 # Pivot: indicador × ano → volume
@@ -144,41 +143,42 @@ df_pivot.columns = [str(c) for c in df_pivot.columns]
 
 anos_cols = [str(a) for a in ANOS if str(a) in df_pivot.columns]
 
-# Codificar seção como número para colorir
-secao_list = sorted(df_pivot["secao"].unique())
-secao_num = {s: i for i, s in enumerate(secao_list)}
-df_pivot["secao_num"] = df_pivot["secao"].map(secao_num)
+escala_log = st.checkbox(
+    "Usar escala logarítmica no eixo vertical (ajuda a ver indicadores de baixo volume "
+    "que ficam \"achatados\" perto do zero ao lado de indicadores muito maiores)",
+    value=False,
+)
 
-dimensions = [
-    dict(label=a, values=df_pivot[a].fillna(0))
-    for a in anos_cols
-]
+fig_pc = go.Figure()
+secoes_ja_na_legenda = set()
 
-fig_pc = go.Figure(go.Parcoords(
-    line=dict(
-        color=df_pivot["secao_num"],
-        colorscale=[
-            [0,    "#2E86AB"],
-            [0.33, "#A23B72"],
-            [0.66, "#F18F01"],
-            [1,    "#C73E1D"],
-        ],
-        showscale=True,
-        colorbar=dict(
-            title="Seção",
-            tickvals=list(secao_num.values()),
-            ticktext=list(secao_num.keys()),
-            len=0.6,
-        ),
-    ),
-    dimensions=dimensions,
-    labelangle=-20,
-))
+for _, row in df_pivot.sort_values("secao").iterrows():
+    secao = row["secao"]
+    y_vals = [row[a] for a in anos_cols]
+    primeira_da_secao = secao not in secoes_ja_na_legenda
+    secoes_ja_na_legenda.add(secao)
+
+    fig_pc.add_trace(go.Scatter(
+        x=anos_cols,
+        y=y_vals,
+        mode="lines+markers",
+        line=dict(color=CORES_SECAO.get(secao, "#888888"), width=3),
+        marker=dict(size=6),
+        opacity=0.65,
+        name=secao,
+        legendgroup=secao,
+        showlegend=primeira_da_secao,
+        text=[row["indicador"]] * len(anos_cols),
+        hovertemplate="<b>%{text}</b><br>%{x}: %{y:,.0f}<extra></extra>",
+    ))
 
 fig_pc.update_layout(
     template=PLOTLY_TEMPLATE,
-    height=500,
-    margin=dict(t=60, b=40, l=80, r=80),
+    height=520,
+    margin=dict(t=40, b=40, l=60, r=40),
+    xaxis=dict(title="Ano", type="category"),
+    yaxis=dict(title="Volume anual", type="log" if escala_log else "linear"),
+    legend=dict(title="Seção", groupclick="togglegroup"),
 )
 st.plotly_chart(fig_pc, use_container_width=True)
 
