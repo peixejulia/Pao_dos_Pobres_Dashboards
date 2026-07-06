@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 
 from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_institucional
+from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_azuis
 from utils.insights import resumo_sazonalidade
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
@@ -103,12 +103,15 @@ df_ano_mes = (
     .reset_index(name="Volume")
 )
 
-# Paleta institucional (mesma usada em todo o dashboard) aplicada aos anos,
-# em vez de uma paleta genérica do Plotly — mantém consistência visual com
-# os demais gráficos.
-PALETA_ANOS = paleta_institucional(len(ANOS))
+# Degradê de azuis (do mais claro/2021 ao mais escuro/2025) em vez da paleta
+# multicor do resto do painel — para os anos, que são um dado sequencial/
+# ordenado, um único matiz variando em intensidade comunica melhor a
+# progressão no tempo. Indexado pela posição do ano na lista ANOS (não pela
+# posição no filtro), pra cada ano manter sempre o mesmo tom mesmo se a
+# seleção da barra lateral mudar.
+PALETA_ANOS = paleta_azuis(len(ANOS))
 anos_presentes = sorted(df_ano_mes["ano"].unique())
-cor_ano = {a: PALETA_ANOS[i % len(PALETA_ANOS)] for i, a in enumerate(anos_presentes)}
+cor_ano = {a: PALETA_ANOS[ANOS.index(a) % len(PALETA_ANOS)] for a in anos_presentes}
 
 fig_rosa = go.Figure()
 

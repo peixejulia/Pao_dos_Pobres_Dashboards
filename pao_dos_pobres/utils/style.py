@@ -123,3 +123,24 @@ def paleta_institucional(n: int) -> list:
             delta = passo if volta % 2 else -passo
             cores.append(_ajustar_luminosidade(base, delta))
     return cores
+
+
+def paleta_azuis(n: int) -> list:
+    """
+    Gera `n` tons de azul (mesmo matiz do azul institucional), do mais claro
+    ao mais escuro — pensada para dados sequenciais/ordenados (como anos),
+    onde um degradê de uma única cor comunica melhor a progressão no tempo
+    do que uma paleta qualitativa multicolor (usada, por ex., nos anos do
+    Gráfico de Rosa da página Sazonalidade).
+    """
+    matiz = 197 / 360  # mesmo matiz do azul petróleo institucional (CORES_SECAO)
+    saturacao = 0.60
+    if n <= 1:
+        return ["#257C9D"]
+    cores = []
+    for i in range(n):
+        t = i / (n - 1)
+        luminosidade = 0.78 - t * 0.50  # do claro (0.78) ao escuro (0.28)
+        r, g, b = colorsys.hls_to_rgb(matiz, luminosidade, saturacao)
+        cores.append("#{:02x}{:02x}{:02x}".format(round(r * 255), round(g * 255), round(b * 255)))
+    return cores
