@@ -15,11 +15,7 @@ df = carregar_desdobramentos()
 
 # ── Sidebar — filtros globais ─────────────────────────────────────────────────
 with st.sidebar:
-    st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Pao_dos_pobres_logo.png/120px-Pao_dos_pobres_logo.png",
-        width=120,
-    )
-    st.title("Pão dos Pobres")
+    titulo_com_logo("Pão dos Pobres", nivel=2)
     st.caption("Levantamento de Estatísticas Mensais (LEM) · 2021–2025")
     st.divider()
 
@@ -48,8 +44,14 @@ df_filtrado = df[
 # ── Cabeçalho da página ───────────────────────────────────────────────────────
 titulo_com_logo("Visão Geral")
 st.markdown(
-    "Dashboard interativo com os indicadores do **Levantamento de Estatísticas Mensais (LEM)** "
-    "da Fundação Pão dos Pobres · período **2021–2025**."
+    "Este painel reúne os indicadores do **Levantamento de Estatísticas Mensais (LEM)** da "
+    "Fundação Pão dos Pobres, referentes ao período de **2021 a 2025**. Ele acompanha o volume "
+    "de atendimentos e atividades em quatro grandes áreas de atuação da instituição — "
+    "**Desdobramentos Técnicos, Educação, Profissionalização e Saúde** — e ajuda a responder "
+    "perguntas como: os atendimentos estão aumentando ou diminuindo ao longo do tempo? Existem "
+    "meses ou épocas do ano com mais demanda? Como as seções e indicadores se comparam entre "
+    "si? O que mudou de um ano para o outro? E quão completos estão os registros mensais? Cada "
+    "página no menu ao lado explora uma dessas perguntas em profundidade."
 )
 st.divider()
 
@@ -95,7 +97,7 @@ fig_ano = px.area(
     y="Volume Total",
     markers=True,
     template="plotly_white",
-    color_discrete_sequence=["#2E86AB"],
+    color_discrete_sequence=[CORES_SECAO["Desdobramentos Técnicos"]],
     labels={"ano": "Ano", "Volume Total": "Soma dos valores"},
 )
 fig_ano.update_traces(

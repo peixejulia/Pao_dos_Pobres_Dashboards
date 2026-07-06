@@ -42,7 +42,8 @@ if not anos or not secoes or df_f.empty:
     st.stop()
 
 # ── VIZ 5A: Heatmap de Completude ─────────────────────────────────────────────
-st.subheader("Heatmap de Completude — % de meses preenchidos por indicador e ano")
+st.subheader("Quanto dos meses esperados tem registro, por indicador e ano")
+st.caption("Técnica: Heatmap de Completude")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele mede a **qualidade/completude dos dados** — "
     "para cada indicador e ano, calcula o percentual de meses que realmente têm um valor "
@@ -104,6 +105,7 @@ st.divider()
 
 # ── VIZ 5B: Gráfico de Linha — evolução mensal de um indicador ────────────────
 st.subheader("Evolução mensal de um indicador")
+st.caption("Técnica: gráfico de linha")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele foca em **um único indicador por vez** e "
     "mostra sua série histórica mês a mês. Serve tanto para inspecionar visualmente a "

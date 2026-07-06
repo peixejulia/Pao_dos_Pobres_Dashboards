@@ -45,7 +45,8 @@ df_anual = (
 )
 
 # ── VIZ 4A: Dumbbell Chart ────────────────────────────────────────────────────
-st.subheader(f"Dumbbell Chart — {ano_a} vs {ano_b}")
+st.subheader(f"Comparação direta entre {ano_a} e {ano_b}")
+st.caption("Técnica: Dumbbell Chart")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele compara, indicador por indicador, o volume "
     "registrado nos **dois anos específicos** escolhidos na barra lateral. Responde "
@@ -107,7 +108,8 @@ else:
 st.divider()
 
 # ── VIZ 4B: Evolução multianual por indicador ─────────────────────────────────
-st.subheader("Evolução multianual — Todos os anos simultaneamente")
+st.subheader("Trajetória de cada indicador ao longo dos 5 anos")
+st.caption("Técnica: gráfico de linhas multianual")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele expande a análise do Dumbbell Chart acima para "
     "**todos os 5 anos ao mesmo tempo**, permitindo ver a trajetória completa de cada "

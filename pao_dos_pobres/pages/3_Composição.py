@@ -53,10 +53,11 @@ if df_agg.empty:
 st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_composicao(df_agg)))
 
 # ── Abas: uma para cada tipo de gráfico ───────────────────────────────────────
-aba_sun, aba_tree = st.tabs(["☀️ Sunburst", "🗺️ Treemap"])
+aba_sun, aba_tree = st.tabs(["Por seção e indicador", "Comparar tamanhos lado a lado"])
 
 # ── VIZ 3A: Sunburst ──────────────────────────────────────────────────────────
 with aba_sun:
+    st.caption("Técnica: Sunburst Chart")
     explicacao_grafico(
         "**📌 O que este gráfico mostra:** ele analisa a **composição** do volume total de "
         "registros em duas camadas — primeiro por seção temática, depois por indicador dentro "
@@ -107,6 +108,7 @@ with aba_sun:
 
 # ── VIZ 3B: Treemap ───────────────────────────────────────────────────────────
 with aba_tree:
+    st.caption("Técnica: Treemap")
     explicacao_grafico(
         "**📌 O que este gráfico mostra:** é a mesma análise de composição do Sunburst "
         "(seção → indicador), mas em formato de blocos retangulares, o que facilita "

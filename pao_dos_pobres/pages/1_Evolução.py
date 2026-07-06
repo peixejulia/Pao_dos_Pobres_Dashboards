@@ -37,7 +37,8 @@ st.divider()
 st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_evolucao(df_f)))
 
 # ── VIZ 1A: Streamgraph ───────────────────────────────────────────────────────
-st.subheader("Streamgraph — Fluxo de volume por seção")
+st.subheader("Como o volume de cada seção evoluiu ao longo do tempo")
+st.caption("Técnica: Streamgraph")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele cruza três informações ao mesmo tempo — o "
     "tempo (mês a mês, de 2021 a 2025), a seção temática e o volume de registros. Serve "
@@ -107,7 +108,8 @@ else:
 st.divider()
 
 # ── VIZ 1B: Bump Chart ────────────────────────────────────────────────────────
-st.subheader("Bump Chart — Ranking de indicadores por ano")
+st.subheader("Como o ranking dos indicadores mudou a cada ano")
+st.caption("Técnica: Bump Chart")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** dentro da seção escolhida acima, ele analisa como "
     "o **ranking de importância de cada indicador mudou ano a ano**. Diferente do "

@@ -66,7 +66,8 @@ media = df_mes["Volume"].mean()
 st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_sazonalidade(df_mes)))
 
 # ── VIZ 2A: Gráfico de Rosa ───────────────────────────────────────────────────
-st.subheader("Gráfico de Rosa — Distribuição circular por mês e ano")
+st.subheader("Quais meses concentram mais atendimentos, comparando os anos")
+st.caption("Técnica: Gráfico de Rosa (Polar Bar Chart)")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele analisa a **sazonalidade** dos registros, "
     "cruzando o mês do ano com o ano civil — ou seja, mostra o volume mês a mês, ano a ano, "
@@ -167,7 +168,8 @@ st.plotly_chart(fig_rosa, use_container_width=True)
 st.divider()
 
 # ── VIZ 2B: Calendar Heatmap ──────────────────────────────────────────────────
-st.subheader("Calendar Heatmap — Volume por ano e mês")
+st.subheader("Volume detalhado por mês e ano")
+st.caption("Técnica: Calendar Heatmap")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** é a mesma informação de ano × mês do Gráfico de "
     "Rosa acima, só que em formato de tabela colorida, o que facilita a leitura de **números "
