@@ -1,1 +1,385 @@
 ﻿ano,unidade,mes,mes_num,secao,indicador,valor,data
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Apadrinhamento Afetivo,12.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Apadrinhamento Afetivo,,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Apadrinhamento Afetivo,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Apadrinhamento Afetivo,12.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Atendimento Familiar,31.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Atendimento Familiar,6.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Atendimento Familiar,27.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Atendimento Familiar,5.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Atendimento Familiar,13.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Atendimento Familiar,28.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Atendimento Familiar,23.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Atendimento Familiar,26.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Atendimento Familiar,29.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Atendimento Familiar,24.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Atendimento Familiar,24.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Atendimento Familiar,24.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Atendimentos Individual,40.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Atendimentos Individual,28.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Atendimentos Individual,41.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Atendimentos Individual,10.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Atendimentos Individual,51.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Atendimentos Individual,61.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Atendimentos Individual,48.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Atendimentos Individual,40.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Atendimentos Individual,62.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Atendimentos Individual,58.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Atendimentos Individual,58.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Atendimentos Individual,58.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Colocação em Família Substituta,3.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Colocação em Família Substituta,0.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Desligamentos,0.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Desligamentos,1.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Desligamentos,0.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Desligamentos,0.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Desligamentos,0.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Desligamentos,1.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Desligamentos,0.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Desligamentos,4.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Desligamentos,0.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Desligamentos,0.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Desligamentos,1.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Desligamentos,0.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Documentação Civil,0.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Documentação Civil,0.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Documentação Civil,0.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Documentação Civil,1.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Documentação Civil,1.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Documentação Civil,0.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Documentação Civil,2.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Documentação Civil,2.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Documentação Civil,3.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Documentação Civil,3.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Documentação Civil,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Documentação Civil,3.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Efetivos na Casa,15.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Efetivos na Casa,14.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Efetivos na Casa,14.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Efetivos na Casa,15.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Efetivos na Casa,16.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Efetivos na Casa,18.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Efetivos na Casa,18.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Efetivos na Casa,15.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Efetivos na Casa,16.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Efetivos na Casa,15.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Efetivos na Casa,18.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Efetivos na Casa,14.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Evasão,2.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Evasão,1.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Evasão,0.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Evasão,0.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Evasão,1.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Evasão,0.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Evasão,1.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Evasão,0.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Evasão,4.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Evasão,3.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Evasão,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Evasão,0.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Interface com Educação,9.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Interface com Educação,3.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Interface com Educação,39.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Interface com Educação,10.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Interface com Educação,1.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Interface com Educação,25.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Interface com Educação,10.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Interface com Educação,33.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Interface com Educação,27.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Interface com Educação,18.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Interface com Educação,25.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Interface com Educação,39.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Interface com Judiciário,8.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Interface com Judiciário,2.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Interface com Judiciário,10.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Interface com Judiciário,5.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Interface com Judiciário,9.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Interface com Judiciário,2.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Interface com Judiciário,7.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Interface com Judiciário,6.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Interface com Judiciário,4.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Interface com Judiciário,6.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Interface com Judiciário,6.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Interface com Judiciário,6.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Interface com Rede Socioassistencial,10.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Interface com Rede Socioassistencial,15.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Interface com Rede Socioassistencial,12.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Interface com Rede Socioassistencial,7.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Interface com Rede Socioassistencial,15.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Interface com Rede Socioassistencial,20.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Interface com Rede Socioassistencial,18.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Interface com Rede Socioassistencial,8.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Interface com Rede Socioassistencial,20.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Interface com Rede Socioassistencial,12.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Interface com Rede Socioassistencial,15.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Interface com Rede Socioassistencial,12.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Interface com Saúde,18.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Interface com Saúde,11.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Interface com Saúde,11.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Interface com Saúde,6.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Interface com Saúde,20.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Interface com Saúde,24.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Interface com Saúde,13.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Interface com Saúde,,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Interface com Saúde,26.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Interface com Saúde,10.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Interface com Saúde,10.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Interface com Saúde,10.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Novos Ingressos,0.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Novos Ingressos,0.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Novos Ingressos,1.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Novos Ingressos,1.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Novos Ingressos,1.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Novos Ingressos,2.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Novos Ingressos,0.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Novos Ingressos,1.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Novos Ingressos,1.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Novos Ingressos,1.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Novos Ingressos,2.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Novos Ingressos,1.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,PIAS / Relatórios,17.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,PIAS / Relatórios,5.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,PIAS / Relatórios,8.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,PIAS / Relatórios,3.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,PIAS / Relatórios,15.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,PIAS / Relatórios,5.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,PIAS / Relatórios,15.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,PIAS / Relatórios,,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,PIAS / Relatórios,10.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,PIAS / Relatórios,13.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,PIAS / Relatórios,5.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,PIAS / Relatórios,8.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Reunião de Equipe,6.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Reunião de Equipe,4.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Reunião de Equipe,7.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Reunião de Equipe,3.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Reunião de Equipe,5.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Reunião de Equipe,5.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Reunião de Equipe,3.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Reunião de Equipe,6.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Reunião de Equipe,8.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Reunião de Equipe,9.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Reunião de Equipe,5.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Reunião de Equipe,7.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Transferências,0.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Transferências,0.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Transferências,0.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Transferências,0.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Transferências,0.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Transferências,1.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Transferências,0.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Transferências,0.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Transferências,1.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Transferências,0.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Transferências,1.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Transferências,0.0,2021-12-01
+2021,unidade_1,JAN,1,Desdobramentos Técnicos,Visitas Domiciliares,2.0,2021-01-01
+2021,unidade_1,FEV,2,Desdobramentos Técnicos,Visitas Domiciliares,1.0,2021-02-01
+2021,unidade_1,MAR,3,Desdobramentos Técnicos,Visitas Domiciliares,0.0,2021-03-01
+2021,unidade_1,ABR,4,Desdobramentos Técnicos,Visitas Domiciliares,0.0,2021-04-01
+2021,unidade_1,MAI,5,Desdobramentos Técnicos,Visitas Domiciliares,0.0,2021-05-01
+2021,unidade_1,JUN,6,Desdobramentos Técnicos,Visitas Domiciliares,1.0,2021-06-01
+2021,unidade_1,JUL,7,Desdobramentos Técnicos,Visitas Domiciliares,0.0,2021-07-01
+2021,unidade_1,AGO,8,Desdobramentos Técnicos,Visitas Domiciliares,1.0,2021-08-01
+2021,unidade_1,SET,9,Desdobramentos Técnicos,Visitas Domiciliares,3.0,2021-09-01
+2021,unidade_1,OUT,10,Desdobramentos Técnicos,Visitas Domiciliares,0.0,2021-10-01
+2021,unidade_1,NOV,11,Desdobramentos Técnicos,Visitas Domiciliares,1.0,2021-11-01
+2021,unidade_1,DEZ,12,Desdobramentos Técnicos,Visitas Domiciliares,0.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,Ensino EJA — Aguardando Vaga,,2021-08-01
+2021,unidade_1,SET,9,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,Ensino EJA — Aguardando Vaga,0.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,Ensino EJA — Matriculados,0.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,Ensino EJA — Matriculados,0.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,Ensino EJA — Matriculados,0.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,Ensino EJA — Matriculados,0.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,Ensino EJA — Matriculados,0.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,Ensino EJA — Matriculados,0.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,Ensino EJA — Matriculados,0.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,Ensino EJA — Matriculados,0.0,2021-08-01
+2021,unidade_1,SET,9,Educação,Ensino EJA — Matriculados,0.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,Ensino EJA — Matriculados,0.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,Ensino EJA — Matriculados,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,Ensino EJA — Matriculados,0.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,Ensino Infantil — Aguardando Vaga,3.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,Ensino Infantil — Aguardando Vaga,4.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,Ensino Infantil — Aguardando Vaga,4.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,Ensino Infantil — Aguardando Vaga,6.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,Ensino Infantil — Aguardando Vaga,4.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,Ensino Infantil — Aguardando Vaga,4.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,Ensino Infantil — Aguardando Vaga,6.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,Ensino Infantil — Aguardando Vaga,6.0,2021-08-01
+2021,unidade_1,SET,9,Educação,Ensino Infantil — Aguardando Vaga,5.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,Ensino Infantil — Aguardando Vaga,4.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,Ensino Infantil — Aguardando Vaga,4.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,Ensino Infantil — Aguardando Vaga,4.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,Ensino Infantil — Matriculados,2.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,Ensino Infantil — Matriculados,2.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,Ensino Infantil — Matriculados,2.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,Ensino Infantil — Matriculados,1.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,Ensino Infantil — Matriculados,5.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,Ensino Infantil — Matriculados,4.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,Ensino Infantil — Matriculados,6.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,Ensino Infantil — Matriculados,7.0,2021-08-01
+2021,unidade_1,SET,9,Educação,Ensino Infantil — Matriculados,1.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,Ensino Infantil — Matriculados,0.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,Ensino Infantil — Matriculados,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,Ensino Infantil — Matriculados,0.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,Ensino Regular — Aguardando Vaga,3.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-08-01
+2021,unidade_1,SET,9,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,Ensino Regular — Aguardando Vaga,0.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,Ensino Regular — Matriculados,12.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,Ensino Regular — Matriculados,0.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,Ensino Regular — Matriculados,3.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,Ensino Regular — Matriculados,0.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,Ensino Regular — Matriculados,0.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,Ensino Regular — Matriculados,0.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,Ensino Regular — Matriculados,0.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,Ensino Regular — Matriculados,1.0,2021-08-01
+2021,unidade_1,SET,9,Educação,Ensino Regular — Matriculados,1.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,Ensino Regular — Matriculados,1.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,Ensino Regular — Matriculados,1.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,Ensino Regular — Matriculados,1.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,SCFV — Aguardando Vaga,0.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,SCFV — Aguardando Vaga,0.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,SCFV — Aguardando Vaga,0.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,SCFV — Aguardando Vaga,0.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,SCFV — Aguardando Vaga,0.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,SCFV — Aguardando Vaga,0.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,SCFV — Aguardando Vaga,0.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,SCFV — Aguardando Vaga,0.0,2021-08-01
+2021,unidade_1,SET,9,Educação,SCFV — Aguardando Vaga,0.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,SCFV — Aguardando Vaga,0.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,SCFV — Aguardando Vaga,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,SCFV — Aguardando Vaga,0.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,SCFV — Matriculados,0.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,SCFV — Matriculados,0.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,SCFV — Matriculados,0.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,SCFV — Matriculados,0.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,SCFV — Matriculados,0.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,SCFV — Matriculados,0.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,SCFV — Matriculados,0.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,SCFV — Matriculados,0.0,2021-08-01
+2021,unidade_1,SET,9,Educação,SCFV — Matriculados,2.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,SCFV — Matriculados,0.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,SCFV — Matriculados,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,SCFV — Matriculados,0.0,2021-12-01
+2021,unidade_1,JAN,1,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-01-01
+2021,unidade_1,FEV,2,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-02-01
+2021,unidade_1,MAR,3,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-03-01
+2021,unidade_1,ABR,4,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-04-01
+2021,unidade_1,MAI,5,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-05-01
+2021,unidade_1,JUN,6,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-06-01
+2021,unidade_1,JUL,7,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-07-01
+2021,unidade_1,AGO,8,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-08-01
+2021,unidade_1,SET,9,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-09-01
+2021,unidade_1,OUT,10,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-10-01
+2021,unidade_1,NOV,11,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-11-01
+2021,unidade_1,DEZ,12,Educação,SCFV — Outros (Reforço/Psicopedagoga/Trabalho Educativo),0.0,2021-12-01
+2021,unidade_1,JAN,1,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-01-01
+2021,unidade_1,FEV,2,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-02-01
+2021,unidade_1,MAR,3,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-03-01
+2021,unidade_1,ABR,4,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-04-01
+2021,unidade_1,MAI,5,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-05-01
+2021,unidade_1,JUN,6,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-06-01
+2021,unidade_1,JUL,7,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-07-01
+2021,unidade_1,AGO,8,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-08-01
+2021,unidade_1,SET,9,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-09-01
+2021,unidade_1,OUT,10,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-10-01
+2021,unidade_1,NOV,11,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Profissionalização,Encaminhado para Mercado de Trabalho,0.0,2021-12-01
+2021,unidade_1,JAN,1,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-01-01
+2021,unidade_1,FEV,2,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-02-01
+2021,unidade_1,MAR,3,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-03-01
+2021,unidade_1,ABR,4,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-04-01
+2021,unidade_1,MAI,5,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-05-01
+2021,unidade_1,JUN,6,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-06-01
+2021,unidade_1,JUL,7,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-07-01
+2021,unidade_1,AGO,8,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-08-01
+2021,unidade_1,SET,9,Profissionalização,Encaminhados para Curso Profissionalizante,0.0,2021-09-01
+2021,unidade_1,OUT,10,Profissionalização,Encaminhados para Curso Profissionalizante,6.0,2021-10-01
+2021,unidade_1,NOV,11,Profissionalização,Encaminhados para Curso Profissionalizante,6.0,2021-11-01
+2021,unidade_1,DEZ,12,Profissionalização,Encaminhados para Curso Profissionalizante,6.0,2021-12-01
+2021,unidade_1,JAN,1,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-01-01
+2021,unidade_1,FEV,2,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-02-01
+2021,unidade_1,MAR,3,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-03-01
+2021,unidade_1,ABR,4,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-04-01
+2021,unidade_1,MAI,5,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-05-01
+2021,unidade_1,JUN,6,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-06-01
+2021,unidade_1,JUL,7,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-07-01
+2021,unidade_1,AGO,8,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-08-01
+2021,unidade_1,SET,9,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-09-01
+2021,unidade_1,OUT,10,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-10-01
+2021,unidade_1,NOV,11,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Profissionalização,Inserido no Mercado de Trabalho,0.0,2021-12-01
+2021,unidade_1,JAN,1,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-01-01
+2021,unidade_1,FEV,2,Profissionalização,Inseridos em Curso Profissionalizante,2.0,2021-02-01
+2021,unidade_1,MAR,3,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-03-01
+2021,unidade_1,ABR,4,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-04-01
+2021,unidade_1,MAI,5,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-05-01
+2021,unidade_1,JUN,6,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-06-01
+2021,unidade_1,JUL,7,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-07-01
+2021,unidade_1,AGO,8,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-08-01
+2021,unidade_1,SET,9,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-09-01
+2021,unidade_1,OUT,10,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-10-01
+2021,unidade_1,NOV,11,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Profissionalização,Inseridos em Curso Profissionalizante,0.0,2021-12-01
+2021,unidade_1,JAN,1,Saúde,Internações,0.0,2021-01-01
+2021,unidade_1,FEV,2,Saúde,Internações,0.0,2021-02-01
+2021,unidade_1,MAR,3,Saúde,Internações,0.0,2021-03-01
+2021,unidade_1,ABR,4,Saúde,Internações,0.0,2021-04-01
+2021,unidade_1,MAI,5,Saúde,Internações,0.0,2021-05-01
+2021,unidade_1,JUN,6,Saúde,Internações,0.0,2021-06-01
+2021,unidade_1,JUL,7,Saúde,Internações,0.0,2021-07-01
+2021,unidade_1,AGO,8,Saúde,Internações,,2021-08-01
+2021,unidade_1,SET,9,Saúde,Internações,1.0,2021-09-01
+2021,unidade_1,OUT,10,Saúde,Internações,0.0,2021-10-01
+2021,unidade_1,NOV,11,Saúde,Internações,0.0,2021-11-01
+2021,unidade_1,DEZ,12,Saúde,Internações,0.0,2021-12-01
+2021,unidade_1,JAN,1,Saúde,Saúde Mental,27.0,2021-01-01
+2021,unidade_1,FEV,2,Saúde,Saúde Mental,15.0,2021-02-01
+2021,unidade_1,MAR,3,Saúde,Saúde Mental,17.0,2021-03-01
+2021,unidade_1,ABR,4,Saúde,Saúde Mental,12.0,2021-04-01
+2021,unidade_1,MAI,5,Saúde,Saúde Mental,15.0,2021-05-01
+2021,unidade_1,JUN,6,Saúde,Saúde Mental,17.0,2021-06-01
+2021,unidade_1,JUL,7,Saúde,Saúde Mental,9.0,2021-07-01
+2021,unidade_1,AGO,8,Saúde,Saúde Mental,,2021-08-01
+2021,unidade_1,SET,9,Saúde,Saúde Mental,17.0,2021-09-01
+2021,unidade_1,OUT,10,Saúde,Saúde Mental,25.0,2021-10-01
+2021,unidade_1,NOV,11,Saúde,Saúde Mental,25.0,2021-11-01
+2021,unidade_1,DEZ,12,Saúde,Saúde Mental,25.0,2021-12-01
