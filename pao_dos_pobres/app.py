@@ -22,6 +22,7 @@ pagina_sazonalidade = st.Page("pages/2_Sazonalidade.py", title="Sazonalidade")
 pagina_composicao = st.Page("pages/3_Composição.py", title="Composição")
 pagina_variacoes = st.Page("pages/4_Variações.py", title="Variações")
 pagina_completude = st.Page("pages/5_Completude.py", title="Completude")
+pagina_gerenciar = st.Page("pages/6_Gerenciar_Dados.py", title="Gerenciar Dados", icon="🔒")
 
 pg = st.navigation([
     pagina_visao_geral,
@@ -30,5 +31,6 @@ pg = st.navigation([
     pagina_composicao,
     pagina_variacoes,
     pagina_completude,
+    pagina_gerenciar,
 ])
 pg.run()
