@@ -1,7 +1,6 @@
 """
-Visão_Geral.py — Página inicial do dashboard Pão dos Pobres.
-
-Para rodar:  streamlit run "Visão_Geral.py"
+home.py — Página inicial do dashboard Pão dos Pobres.
+Executada via st.navigation()/st.Page() a partir de app.py.
 """
 import streamlit as st
 import plotly.express as px
@@ -10,13 +9,6 @@ import pandas as pd
 from utils.data import carregar_desdobramentos, carregar_gerencial
 from utils.style import CORES_SECAO, ANOS, titulo_com_logo
 from utils.insights import resumo_geral
-
-# ── Configuração da página ────────────────────────────────────────────────────
-st.set_page_config(
-    page_title="Pão dos Pobres — Dashboard LEM",
-    page_icon="🏠",
-    layout="wide",
-)
 
 # ── Carregamento de dados ─────────────────────────────────────────────────────
 df = carregar_desdobramentos()

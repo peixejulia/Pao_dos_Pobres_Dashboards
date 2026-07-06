@@ -15,8 +15,6 @@ from utils.data import carregar_desdobramentos
 from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo
 from utils.insights import resumo_completude
 
-st.set_page_config(page_title="Completude · LEM", layout="wide")
-
 # ── Dados ─────────────────────────────────────────────────────────────────────
 df = carregar_desdobramentos()
 

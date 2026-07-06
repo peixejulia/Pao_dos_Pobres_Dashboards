@@ -15,8 +15,6 @@ from utils.data import carregar_desdobramentos
 from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo
 from utils.insights import resumo_sazonalidade
 
-st.set_page_config(page_title="Sazonalidade · LEM", layout="wide")
-
 # ── Dados ─────────────────────────────────────────────────────────────────────
 df = carregar_desdobramentos()
 
