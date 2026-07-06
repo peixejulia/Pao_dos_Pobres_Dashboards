@@ -17,8 +17,10 @@ CORES_SECAO = {
 ORDEM_MES = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN",
              "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"]
 
-# Anos disponíveis na base
-ANOS = [2021, 2022, 2023, 2024, 2025]
+# NOTA: a lista de anos disponíveis NÃO fica mais aqui como constante fixa —
+# ela é derivada dinamicamente dos dados via `anos_disponiveis()` em
+# utils/data.py, para que anos novos (ex.: 2026) adicionados pela página
+# "Gerenciar Dados" apareçam automaticamente nos filtros, sem editar código.
 
 # Tema padrão dos gráficos Plotly
 PLOTLY_TEMPLATE = "plotly_white"

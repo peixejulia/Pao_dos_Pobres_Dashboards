@@ -11,12 +11,13 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 
-from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_azuis
+from utils.data import carregar_desdobramentos, anos_disponiveis
+from utils.style import CORES_SECAO, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_azuis
 from utils.insights import resumo_sazonalidade
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
 df = carregar_desdobramentos()
+ANOS = anos_disponiveis()  # dinâmico: reflete os anos realmente presentes na base
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -66,7 +67,7 @@ media = df_mes["Volume"].mean()
 st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_sazonalidade(df_mes)))
 
 # ── VIZ 2A: Gráfico de Rosa ───────────────────────────────────────────────────
-st.subheader("Quais meses concentram mais atendimentos, comparando os anos")
+st.subheader("Concentração de atendimentos por mês, comparando os anos")
 st.caption("Técnica: Gráfico de Rosa (Polar Bar Chart)")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele analisa a **sazonalidade** dos registros, "
@@ -86,7 +87,7 @@ with st.expander("ℹ️ Como ler este gráfico"):
         "**O que cada cor significa:** dentro de cada fatia (mês) existem várias barrinhas "
         "coloridas lado a lado, uma para **cada ano** (veja a legenda embaixo do gráfico). "
         "Isso permite comparar o mesmo mês em anos diferentes — por exemplo, ver se Setembro "
-        "de 2025 teve mais atendimentos do que Setembro de 2021.\n\n"
+        f"de {max(ANOS)} teve mais atendimentos do que Setembro de {min(ANOS)}.\n\n"
         "**O que o tamanho significa:** quanto **mais a barra se estende para fora do "
         "centro** (mais \"comprida\"), **mais registros** houve naquele mês/ano. Os números "
         "no eixo (0, 200, 400...) mostram a escala de volume.\n\n"

@@ -11,12 +11,13 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 
-from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
+from utils.data import carregar_desdobramentos, anos_disponiveis
+from utils.style import CORES_SECAO, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_completude
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
 df = carregar_desdobramentos()
+ANOS = anos_disponiveis()  # dinâmico: reflete os anos realmente presentes na base
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -42,7 +43,7 @@ if not anos or not secoes or df_f.empty:
     st.stop()
 
 # ── VIZ 5A: Heatmap de Completude ─────────────────────────────────────────────
-st.subheader("Quanto dos meses esperados tem registro, por indicador e ano")
+st.subheader("Completude dos registros mensais, por indicador e ano")
 st.caption("Técnica: Heatmap de Completude")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele mede a **qualidade/completude dos dados** — "
@@ -117,7 +118,7 @@ explicacao_grafico(
 with st.expander("ℹ️ Como ler este gráfico"):
     st.markdown(
         "**A ideia geral:** escolha um indicador na caixa abaixo e veja como o valor dele "
-        "mudou **mês a mês**, ao longo de todo o período (2021–2025).\n\n"
+        f"mudou **mês a mês**, ao longo de todo o período ({min(ANOS)}–{max(ANOS)}).\n\n"
         "**O que procurar:** uma **lacuna** (espaço em branco) na linha significa que aquele "
         "mês não teve registro. Uma **queda ou subida muito brusca** em relação aos meses "
         "vizinhos pode indicar um valor inconsistente (erro de digitação, mudança na forma "

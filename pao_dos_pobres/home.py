@@ -6,17 +6,18 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
-from utils.data import carregar_desdobramentos, carregar_gerencial
-from utils.style import CORES_SECAO, ANOS, titulo_com_logo, explicacao_grafico
+from utils.data import carregar_desdobramentos, carregar_gerencial, anos_disponiveis
+from utils.style import CORES_SECAO, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_geral
 
 # ── Carregamento de dados ─────────────────────────────────────────────────────
 df = carregar_desdobramentos()
+ANOS = anos_disponiveis()  # dinâmico: reflete os anos realmente presentes na base
 
 # ── Sidebar — filtros globais ─────────────────────────────────────────────────
 with st.sidebar:
     titulo_com_logo("Pão dos Pobres", nivel=2)
-    st.caption("Levantamento de Estatísticas Mensais (LEM) · 2021–2025")
+    st.caption(f"Levantamento de Estatísticas Mensais (LEM) · {min(ANOS)}–{max(ANOS)}")
     st.divider()
 
     anos_selecionados = st.multiselect(
@@ -45,7 +46,7 @@ df_filtrado = df[
 titulo_com_logo("Visão Geral")
 st.markdown(
     "Este painel reúne os indicadores do **Levantamento de Estatísticas Mensais (LEM)** da "
-    "Fundação Pão dos Pobres, referentes ao período de **2021 a 2025**. Ele acompanha o volume "
+    f"Fundação Pão dos Pobres, referentes ao período de **{min(ANOS)} a {max(ANOS)}**. Ele acompanha o volume "
     "de atendimentos e atividades em quatro grandes áreas de atuação da instituição — "
     "**Desdobramentos Técnicos, Educação, Profissionalização e Saúde** — e ajuda a responder "
     "perguntas como: os atendimentos estão aumentando ou diminuindo ao longo do tempo? Existem "
@@ -79,7 +80,7 @@ st.subheader("Volume total por ano")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** aqui somamos **todos** os registros do LEM (todas as "
     "seções e indicadores juntos) por ano, dando uma visão panorâmica de como o volume total "
-    "de atendimentos e atividades da Fundação evoluiu de 2021 a 2025. É o ponto de partida "
+    f"de atendimentos e atividades da Fundação evoluiu de {min(ANOS)} a {max(ANOS)}. É o ponto de partida "
     "para saber se a instituição está registrando mais ou menos atividade ao longo do tempo, "
     "antes de detalhar por seção, indicador ou mês nas páginas seguintes."
 )
@@ -115,7 +116,7 @@ st.divider()
 st.subheader("Volume por seção temática")
 
 explicacao_grafico(
-    "**📌 O que este gráfico mostra:** aqui os registros de **todo o período** (2021–2025) "
+    f"**📌 O que este gráfico mostra:** aqui os registros de **todo o período** ({min(ANOS)}–{max(ANOS)}) "
     "são somados e agrupados pelas 4 seções temáticas do LEM (Desdobramentos Técnicos, "
     "Educação, Profissionalização e Saúde). Ele responde à pergunta: qual área da instituição "
     "concentra mais atividade registrada em termos absolutos? É o ponto de partida para "

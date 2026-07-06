@@ -9,12 +9,13 @@ import streamlit as st
 import plotly.express as px
 import pandas as pd
 
-from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
+from utils.data import carregar_desdobramentos, anos_disponiveis
+from utils.style import CORES_SECAO, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico
 from utils.insights import resumo_composicao
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
 df = carregar_desdobramentos()
+ANOS = anos_disponiveis()  # dinâmico: reflete os anos realmente presentes na base
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -53,7 +54,7 @@ if df_agg.empty:
 st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_composicao(df_agg)))
 
 # ── Abas: uma para cada tipo de gráfico ───────────────────────────────────────
-aba_sun, aba_tree = st.tabs(["Por seção e indicador", "Comparar tamanhos lado a lado"])
+aba_sun, aba_tree = st.tabs(["Composição por seção e indicador", "Comparação de tamanhos lado a lado"])
 
 # ── VIZ 3A: Sunburst ──────────────────────────────────────────────────────────
 with aba_sun:

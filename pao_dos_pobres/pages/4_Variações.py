@@ -11,23 +11,20 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 
-from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_institucional
+from utils.data import carregar_desdobramentos, anos_disponiveis
+from utils.style import CORES_SECAO, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_institucional
 from utils.insights import resumo_variacoes
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
 df = carregar_desdobramentos()
+ANOS = anos_disponiveis()  # dinâmico: reflete os anos realmente presentes na base
 
-# ── Sidebar ───────────────────────────────────────────────────────────────────
+# ── Sidebar — só o filtro universal desta página (afeta os 2 gráficos) ────────
 with st.sidebar:
     st.title("Filtros")
     secoes = st.multiselect(
         "Seções", sorted(df["secao"].unique()), default=sorted(df["secao"].unique())
     )
-    st.divider()
-    st.markdown("**Dumbbell — escolha os anos**")
-    ano_a = st.selectbox("Ano inicial", ANOS, index=0)
-    ano_b = st.selectbox("Ano final",   ANOS, index=len(ANOS) - 1)
 
 df_f = df[df["secao"].isin(secoes)]
 
@@ -45,11 +42,19 @@ df_anual = (
 )
 
 # ── VIZ 4A: Dumbbell Chart ────────────────────────────────────────────────────
+# Filtro específico deste gráfico (não afeta o de baixo) — fica junto do
+# próprio gráfico em vez da barra lateral, que é só para filtros universais.
+col_ano_a, col_ano_b = st.columns(2)
+with col_ano_a:
+    ano_a = st.selectbox("Ano inicial", ANOS, index=0)
+with col_ano_b:
+    ano_b = st.selectbox("Ano final", ANOS, index=len(ANOS) - 1)
+
 st.subheader(f"Comparação direta entre {ano_a} e {ano_b}")
 st.caption("Técnica: Dumbbell Chart")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele compara, indicador por indicador, o volume "
-    "registrado nos **dois anos específicos** escolhidos na barra lateral. Responde "
+    "registrado nos **dois anos específicos** escolhidos acima. Responde "
     "diretamente à pergunta: quais indicadores mais **cresceram ou caíram** entre esses "
     "dois anos, e qual foi a magnitude dessa mudança? É a forma mais direta de medir "
     "variação entre dois pontos no tempo, sem o \"ruído\" dos anos intermediários."
@@ -108,7 +113,7 @@ else:
 st.divider()
 
 # ── VIZ 4B: Evolução multianual por indicador ─────────────────────────────────
-st.subheader("Trajetória de cada indicador ao longo dos 5 anos")
+st.subheader(f"Trajetória dos indicadores entre {min(ANOS)} e {max(ANOS)}")
 st.caption("Técnica: gráfico de linhas multianual")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele expande a análise do Dumbbell Chart acima para "
@@ -125,7 +130,7 @@ with st.expander("ℹ️ Como ler este gráfico"):
         "**A ideia geral:** enquanto o Dumbbell Chart acima compara só dois anos, este "
         "gráfico mostra **todos os anos ao mesmo tempo**, um indicador de cada vez, como um "
         "conjunto de linhas.\n\n"
-        "**Os eixos:** o eixo horizontal é o **ano** (2021 a 2025) e o eixo vertical é o "
+        f"**Os eixos:** o eixo horizontal é o **ano** ({min(ANOS)} a {max(ANOS)}) e o eixo vertical é o "
         "**volume de registros**. Todos os anos compartilham a mesma escala vertical, "
         "então **subir de verdade significa mais volume** — diferente de um Parallel "
         "Coordinates \"clássico\", que reescala cada ano de forma independente e pode "

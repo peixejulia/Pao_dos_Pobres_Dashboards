@@ -11,12 +11,13 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 
-from utils.data import carregar_desdobramentos
-from utils.style import CORES_SECAO, ANOS, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_institucional
+from utils.data import carregar_desdobramentos, anos_disponiveis
+from utils.style import CORES_SECAO, ORDEM_MES, PLOTLY_TEMPLATE, titulo_com_logo, explicacao_grafico, paleta_institucional
 from utils.insights import resumo_evolucao
 
 # ── Dados ─────────────────────────────────────────────────────────────────────
 df = carregar_desdobramentos()
+ANOS = anos_disponiveis()  # dinâmico: reflete os anos realmente presentes na base
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -29,19 +30,19 @@ with st.sidebar:
 df_f = df[df["ano"].isin(anos) & df["secao"].isin(secoes)]
 
 # ── Cabeçalho ─────────────────────────────────────────────────────────────────
-titulo_com_logo("Como os indicadores evoluíram?")
-st.markdown("**PQ1** · Análise da evolução temporal dos registros de 2021 a 2025.")
+titulo_com_logo("Evolução dos Indicadores")
+st.markdown(f"**PQ1** · Análise da evolução temporal dos registros de {min(ANOS)} a {max(ANOS)}.")
 st.divider()
 
 # ── Resumo em palavras ────────────────────────────────────────────────────────
 st.info("📝 **Resumo em palavras**  \n" + "  \n".join(resumo_evolucao(df_f)))
 
 # ── VIZ 1A: Streamgraph ───────────────────────────────────────────────────────
-st.subheader("Como o volume de cada seção evoluiu ao longo do tempo")
+st.subheader("Evolução do volume de atendimentos por seção")
 st.caption("Técnica: Streamgraph")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** ele cruza três informações ao mesmo tempo — o "
-    "tempo (mês a mês, de 2021 a 2025), a seção temática e o volume de registros. Serve "
+    f"tempo (mês a mês, de {min(ANOS)} a {max(ANOS)}), a seção temática e o volume de registros. Serve "
     "para identificar **tendências de crescimento ou queda de cada seção** ao longo do "
     "tempo e enxergar mudanças na composição do total — por exemplo, se uma seção passou "
     "a representar uma fatia maior ou menor do volume geral nos últimos anos."
@@ -108,7 +109,7 @@ else:
 st.divider()
 
 # ── VIZ 1B: Bump Chart ────────────────────────────────────────────────────────
-st.subheader("Como o ranking dos indicadores mudou a cada ano")
+st.subheader("Evolução do ranking dos indicadores por ano")
 st.caption("Técnica: Bump Chart")
 explicacao_grafico(
     "**📌 O que este gráfico mostra:** dentro da seção escolhida acima, ele analisa como "

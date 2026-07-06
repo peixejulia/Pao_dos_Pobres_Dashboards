@@ -26,6 +26,18 @@ def carregar_desdobramentos() -> pd.DataFrame:
 
 
 @st.cache_data
+def anos_disponiveis() -> list:
+    """
+    Lista de anos presentes na base tratada, em ordem crescente — derivada
+    dinamicamente dos dados (não hardcoded). Assim, se um novo ano (ex.: 2026)
+    for adicionado via a página "Gerenciar Dados", ele aparece automaticamente
+    nos filtros e nos textos do painel, sem precisar editar código.
+    """
+    df = carregar_desdobramentos()
+    return sorted(int(a) for a in df["ano"].dropna().unique())
+
+
+@st.cache_data
 def carregar_gerencial() -> pd.DataFrame:
     """
     Retorna os indicadores de efetividade gerencial (2025).
