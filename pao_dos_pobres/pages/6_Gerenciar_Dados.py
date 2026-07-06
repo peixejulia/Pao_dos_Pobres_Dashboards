@@ -3,13 +3,23 @@ Página 6 — Gerenciar Dados (área restrita)
 
 Permite à equipe da Fundação:
   • Ver quais planilhas LEM estão hoje alimentando o painel
-  • Adicionar uma planilha nova (ano/unidade) ou substituir uma existente
+  • Adicionar uma planilha nova (por ano) ou substituir uma existente
   • Excluir uma planilha (o painel recalcula tudo sem ela)
 
 Cada mudança reprocessa TODOS os dados a partir dos arquivos que restarem
 e publica o resultado num único commit no GitHub — o mesmo repositório
 que alimenta o site público no Streamlit Cloud, que se atualiza sozinho
 a partir disso.
+
+NOTA: esta página não pede mais uma "Unidade" para cada planilha — cada
+ano tem no máximo UMA planilha oficial. O campo existia para o caso de a
+Fundação reportar por casa/unidade separadamente, mas isso nunca foi
+confirmado com a instituição e, na prática, só criava risco: bastava
+digitar um nome de unidade diferente por engano para o painel passar a
+tratar aquilo como um arquivo "novo" em vez de substituir o existente,
+gerando dados fragmentados ou duplicados. Se no futuro a Fundação passar
+a reportar por unidade de fato, vale reintroduzir o campo com uma lista
+fixa (não texto livre) para evitar esse risco.
 """
 import streamlit as st
 
@@ -41,26 +51,17 @@ st.markdown(
 
 st.markdown("**ℹ️ Como usar esta página** (clique em cada tópico abaixo para expandir)")
 
-with st.expander("❓ O que é \"Unidade\"?"):
-    st.markdown(
-        "É a casa/unidade física da Fundação que gerou aquela planilha (caso "
-        "existam várias casas reportando separadamente). Hoje todos os dados "
-        "históricos usam **`unidade_1`** — a não ser que você tenha certeza de "
-        "que o arquivo é de uma casa diferente, **deixe sempre `unidade_1`**."
-    )
-
 with st.expander("📅 Passo a passo — Adicionar ou substituir uma planilha anual"):
     st.markdown(
         "1. Em **Ano**, escolha o ano da planilha (ex.: 2026).\n"
-        "2. Em **Unidade**, deixe `unidade_1` (a não ser que saiba que é outra).\n"
-        "3. Clique em **Upload** e escolha o arquivo Excel (.xlsx) no seu computador.\n"
-        "4. Confira a mensagem de prévia (\"Planilha lida com sucesso: X registros "
+        "2. Clique em **Upload** e escolha o arquivo Excel (.xlsx) no seu computador.\n"
+        "3. Confira a mensagem de prévia (\"Planilha lida com sucesso: X registros "
         "encontrados\"). Se aparecer um erro em vermelho, pare e peça ajuda antes "
         "de continuar.\n"
-        "5. Clique em **\"✅ Confirmar e publicar\"** e aguarde a mensagem de "
+        "4. Clique em **\"✅ Confirmar e publicar\"** e aguarde a mensagem de "
         "sucesso — o site público reinicia sozinho em seguida (leva uns 30 a "
         "60 segundos).\n"
-        "6. Se já existia uma planilha para o mesmo ano e unidade, ela é "
+        "5. Se já existia uma planilha para o mesmo ano, ela é "
         "**substituída automaticamente** pela nova — não duplica dados.\n\n"
         "**Dica:** faça um arquivo de cada vez e espere a publicação terminar "
         "antes de subir o próximo."
@@ -72,7 +73,7 @@ with st.expander("🗑️ Passo a passo — Excluir uma planilha"):
         "painel\"**.\n"
         "2. Clique em **\"🗑️ Excluir\"** ao lado dela.\n"
         "3. Confirme clicando em **\"Sim, excluir\"**. O painel público é "
-        "recalculado sem os dados daquele ano/unidade."
+        "recalculado sem os dados daquele ano."
     )
 
 st.divider()
@@ -115,25 +116,47 @@ except ErroGitHub as e:
     st.error(f"Não foi possível carregar a lista de arquivos: {e}")
     st.stop()
 
+# Um arquivo anual por ano (no máximo). Se por algum motivo existir mais de
+# um arquivo para o mesmo ano (ex.: sobra do formato antigo com "unidade"),
+# fica o último encontrado — a próxima publicação já limpa a duplicata.
 arquivos_anuais_existentes = {
-    (a["metadata"]["ano"], a["metadata"]["unidade"]): a
+    a["metadata"]["ano"]: a
     for a in arquivos
     if a["metadata"] and a["metadata"]["tipo"] == "anual"
 }
 
 
-def _publicar(novos_anuais: dict, mensagem_commit: str):
+def _publicar(estado_final_anos: dict, mensagem_commit: str):
     """
-    Reprocessa tudo a partir do conjunto final de arquivos (já com a
+    Reprocessa tudo a partir do conjunto final de arquivos anuais (já com a
     mudança aplicada) e publica num único commit.
-    `novos_anuais`: dict {(ano, unidade): bytes_ou_None}  (None = exclui)
+
+    `estado_final_anos`: dict {ano: bytes_ou_None} — o estado final
+    desejado para cada ano (None = não deve mais existir planilha anual
+    daquele ano). Se um ano já tinha um arquivo publicado com o nome
+    antigo (formato com "unidade"), esse arquivo antigo é removido e o
+    conteúdo novo é gravado só no caminho atual (um arquivo por ano) —
+    evita duplicar o mesmo ano sob dois nomes diferentes no repositório.
     """
     with st.spinner("Reprocessando dados e publicando no GitHub — isso pode levar até 1 minuto..."):
-        resultado = reprocessar_tudo(novos_anuais)
+        arquivos_para_reprocessar = {
+            ano: conteudo
+            for ano, conteudo in estado_final_anos.items()
+            if conteudo is not None
+        }
+        resultado = reprocessar_tudo(arquivos_para_reprocessar)
 
         mudancas = {}
-        for (ano, unidade), conteudo in novos_anuais.items():
-            mudancas[path_anual(ano, unidade)] = conteudo  # None = exclui
+        for ano, conteudo in estado_final_anos.items():
+            caminho_atual = arquivos_anuais_existentes.get(ano, {}).get("path")
+            caminho_novo = path_anual(ano)
+            if conteudo is None:
+                if caminho_atual:
+                    mudancas[caminho_atual] = None
+            else:
+                if caminho_atual and caminho_atual != caminho_novo:
+                    mudancas[caminho_atual] = None
+                mudancas[caminho_novo] = conteudo
 
         saida = serializar_para_publicacao(resultado)
         for nome_arquivo, conteudo in saida.items():
@@ -159,28 +182,28 @@ st.subheader("Planilhas atualmente no painel")
 if not arquivos_anuais_existentes:
     st.info("Nenhuma planilha anual publicada ainda.")
 else:
-    for (ano, unidade), info in sorted(arquivos_anuais_existentes.items()):
+    for ano, info in sorted(arquivos_anuais_existentes.items()):
         col1, col2, col3 = st.columns([2, 2, 1])
-        col1.markdown(f"**{ano}** — {unidade}")
+        col1.markdown(f"**{ano}**")
         col2.caption(f"{info['tamanho_kb']} KB")
-        if col3.button("🗑️ Excluir", key=f"del_{ano}_{unidade}"):
-            st.session_state["confirmar_exclusao"] = (ano, unidade)
+        if col3.button("🗑️ Excluir", key=f"del_{ano}"):
+            st.session_state["confirmar_exclusao"] = ano
 
     if "confirmar_exclusao" in st.session_state:
-        ano_del, unidade_del = st.session_state["confirmar_exclusao"]
+        ano_del = st.session_state["confirmar_exclusao"]
         st.warning(
-            f"Tem certeza que quer excluir a planilha de **{ano_del} / {unidade_del}**? "
-            "O painel será recalculado sem os dados desse ano/unidade."
+            f"Tem certeza que quer excluir a planilha do ano **{ano_del}**? "
+            "O painel será recalculado sem os dados desse ano."
         )
         c1, c2 = st.columns(2)
         if c1.button("Sim, excluir", type="primary"):
-            novos_anuais = {
-                (a, u): baixar_arquivo(info["path"])
-                for (a, u), info in arquivos_anuais_existentes.items()
-                if (a, u) != (ano_del, unidade_del)
+            estado_final = {
+                a: baixar_arquivo(info["path"])
+                for a, info in arquivos_anuais_existentes.items()
+                if a != ano_del
             }
-            novos_anuais[(ano_del, unidade_del)] = None  # marca para exclusão
-            _publicar(novos_anuais, f"Remove planilha {ano_del}/{unidade_del}")
+            estado_final[ano_del] = None
+            _publicar(estado_final, f"Remove planilha do ano {ano_del}")
             del st.session_state["confirmar_exclusao"]
         if c2.button("Cancelar"):
             del st.session_state["confirmar_exclusao"]
@@ -188,19 +211,14 @@ else:
 
 st.divider()
 st.subheader("Adicionar ou substituir uma planilha")
-st.caption(
-    "Se já existir uma planilha para o mesmo ano e unidade, ela será "
-    "substituída pela nova."
-)
+st.caption("Se já existir uma planilha para o mesmo ano, ela será substituída pela nova.")
 
-col_ano, col_unidade = st.columns(2)
-ano_novo = col_ano.number_input("Ano", min_value=2000, max_value=2100, value=2026, step=1)
-unidade_nova = col_unidade.text_input("Unidade", value="unidade_1")
+ano_novo = st.number_input("Ano", min_value=2000, max_value=2100, value=2026, step=1)
 arquivo_novo = st.file_uploader("Planilha LEM (.xlsx)", type=["xlsx"], key="upload_anual")
 
 if arquivo_novo is not None:
     try:
-        preview = parse_lem_file(arquivo_novo, int(ano_novo), unidade_nova, nome_exibicao=arquivo_novo.name)
+        preview = parse_lem_file(arquivo_novo, int(ano_novo), nome_exibicao=arquivo_novo.name)
     except ErroDeFormato as e:
         st.error(str(e))
         preview = None
@@ -214,14 +232,14 @@ if arquivo_novo is not None:
                 preview.groupby("secao")["indicador"].nunique().rename("Nº de indicadores")
             )
             if st.button("✅ Confirmar e publicar", type="primary", key="confirmar_anual"):
-                novos_anuais = {
-                    (a, u): baixar_arquivo(info["path"])
-                    for (a, u), info in arquivos_anuais_existentes.items()
-                    if (a, u) != (int(ano_novo), unidade_nova)
+                estado_final = {
+                    a: baixar_arquivo(info["path"])
+                    for a, info in arquivos_anuais_existentes.items()
+                    if a != int(ano_novo)
                 }
                 arquivo_novo.seek(0)
-                novos_anuais[(int(ano_novo), unidade_nova)] = arquivo_novo.read()
+                estado_final[int(ano_novo)] = arquivo_novo.read()
                 _publicar(
-                    novos_anuais,
-                    f"Adiciona/substitui planilha {int(ano_novo)}/{unidade_nova}",
+                    estado_final,
+                    f"Adiciona/substitui planilha do ano {int(ano_novo)}",
                 )

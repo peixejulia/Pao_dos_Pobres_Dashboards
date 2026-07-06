@@ -69,9 +69,8 @@ def _branch() -> str:
 
 # ── Convenções de nomes (é isso que faz a pasta funcionar como "a lista") ──────
 
-def path_anual(ano: int, unidade: str) -> str:
-    unidade_slug = re.sub(r"\s+", "_", unidade.strip().lower())
-    return f"{PASTA_BRUTOS}/anual/{ano}_{unidade_slug}.xlsx"
+def path_anual(ano: int) -> str:
+    return f"{PASTA_BRUTOS}/anual/{ano}.xlsx"
 
 
 def path_gerencial(ano: int) -> str:
@@ -79,10 +78,19 @@ def path_gerencial(ano: int) -> str:
 
 
 def metadata_do_path(path: str) -> dict | None:
-    """Extrai {tipo, ano, unidade} a partir de um caminho gerado por path_anual/path_gerencial."""
-    m = re.search(r"/anual/(\d{4})_(.+)\.xlsx$", path)
+    """Extrai {tipo, ano} a partir de um caminho gerado por path_anual/path_gerencial.
+
+    Também reconhece o formato antigo "{ano}_algumacoisa.xlsx" (de quando o
+    nome do arquivo incluía a "unidade", conceito removido do painel) —
+    assim planilhas já publicadas antes dessa mudança continuam aparecendo
+    na lista normalmente, sem precisar ser reenviadas.
+    """
+    m = re.search(r"/anual/(\d{4})\.xlsx$", path)
     if m:
-        return {"tipo": "anual", "ano": int(m.group(1)), "unidade": m.group(2)}
+        return {"tipo": "anual", "ano": int(m.group(1))}
+    m = re.search(r"/anual/(\d{4})_.+\.xlsx$", path)
+    if m:
+        return {"tipo": "anual", "ano": int(m.group(1))}
     m = re.search(r"/gerencial/(\d{4})_gerencial\.xlsx$", path)
     if m:
         return {"tipo": "gerencial", "ano": int(m.group(1))}

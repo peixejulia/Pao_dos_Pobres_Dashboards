@@ -6,8 +6,8 @@ Portado do notebook `tratamento_dados_lem.ipynb`, adaptado para:
     — necessário porque os arquivos agora chegam via upload no navegador
       ou são baixados do GitHub, não vêm mais de uma pasta local fixa.
   • expor uma função orquestradora `reprocessar_tudo()` que recebe o
-    conjunto de arquivos atualmente "oficiais" (um por ano+unidade, mais
-    o arquivo gerencial) e devolve os 3 DataFrames finais, prontos para
+    conjunto de arquivos atualmente "oficiais" (um por ano, mais o
+    arquivo gerencial) e devolve os 3 DataFrames finais, prontos para
     serem salvos como CSV/parquet.
 
 Nenhuma regra de negócio foi alterada em relação ao notebook original —
@@ -132,10 +132,10 @@ def add_date_column(df: pd.DataFrame) -> pd.DataFrame:
 
 # ── Parsers principais (idênticos ao notebook, só trocando Path por arquivo) ──
 
-def parse_lem_file(arquivo: ArquivoTipo, ano: int, unidade: str, nome_exibicao: str = "") -> pd.DataFrame:
+def parse_lem_file(arquivo: ArquivoTipo, ano: int, nome_exibicao: str = "") -> pd.DataFrame:
     """
     Lê um arquivo LEM padrão (aba "Planilha1") e retorna um DataFrame no
-    formato longo: [ano, unidade, mes, mes_num, secao, indicador, valor].
+    formato longo: [ano, mes, mes_num, secao, indicador, valor].
 
     `arquivo` pode ser um caminho, bytes ou um objeto tipo-arquivo (ex.: o
     retorno de st.file_uploader ou um BytesIO baixado do GitHub).
@@ -236,7 +236,6 @@ def parse_lem_file(arquivo: ArquivoTipo, ano: int, unidade: str, nome_exibicao: 
             val = safe_numeric(row.iloc[col_idx])
             records.append({
                 "ano":       ano,
-                "unidade":   unidade,
                 "mes":       mes_nome,
                 "mes_num":   MES_MAP[mes_nome],
                 "secao":     current_section,
@@ -302,7 +301,6 @@ def parse_lem_anual_2025(arquivo: ArquivoTipo, ano: int = 2025, nome_exibicao: s
             val = safe_numeric(row.iloc[col_idx])
             records.append({
                 "ano":       ano,
-                "unidade":   "gerencial",
                 "mes":       mes_nome,
                 "mes_num":   MES_MAP[mes_nome],
                 "secao":     "Dados Gerenciais de Efetividade",
@@ -354,25 +352,25 @@ def reprocessar_tudo(
     como o notebook produzia, mas podendo ser chamado a qualquer momento
     com qualquer combinação de arquivos (não só os 5 originais).
 
-    `arquivos_anuais`: dict {(ano, unidade): arquivo}
+    `arquivos_anuais`: dict {ano: arquivo}
     `arquivo_gerencial`: arquivo LEM anual completo, ou None se não houver
     """
     avisos = []
     dfs = []
-    for (ano, unidade), arquivo in arquivos_anuais.items():
+    for ano, arquivo in arquivos_anuais.items():
         try:
-            df = parse_lem_file(arquivo, ano, unidade, nome_exibicao=f"{ano}/{unidade}")
+            df = parse_lem_file(arquivo, ano, nome_exibicao=str(ano))
             dfs.append(df)
         except ErroDeFormato as e:
-            avisos.append(f"Arquivo {ano}/{unidade} ignorado: {e}")
+            avisos.append(f"Arquivo do ano {ano} ignorado: {e}")
 
     if dfs:
         df_main = pd.concat(dfs, ignore_index=True)
         df_main = add_date_column(df_main)
-        df_main = df_main.sort_values(["unidade", "secao", "indicador", "data"]).reset_index(drop=True)
+        df_main = df_main.sort_values(["secao", "indicador", "data"]).reset_index(drop=True)
         df_main["valor"] = pd.to_numeric(df_main["valor"], errors="coerce")
     else:
-        df_main = pd.DataFrame(columns=["ano", "unidade", "mes", "mes_num", "secao", "indicador", "valor", "data"])
+        df_main = pd.DataFrame(columns=["ano", "mes", "mes_num", "secao", "indicador", "valor", "data"])
 
     if arquivo_gerencial is not None:
         try:
@@ -382,10 +380,10 @@ def reprocessar_tudo(
             df_gerencial["valor"] = pd.to_numeric(df_gerencial["valor"], errors="coerce")
         except ErroDeFormato as e:
             avisos.append(f"Arquivo gerencial ignorado: {e}")
-            df_gerencial = pd.DataFrame(columns=["ano", "unidade", "mes", "mes_num", "secao", "indicador", "valor", "data"])
+            df_gerencial = pd.DataFrame(columns=["ano", "mes", "mes_num", "secao", "indicador", "valor", "data"])
             df_atividades = pd.DataFrame(columns=["mês", "número de participantes"])
     else:
-        df_gerencial = pd.DataFrame(columns=["ano", "unidade", "mes", "mes_num", "secao", "indicador", "valor", "data"])
+        df_gerencial = pd.DataFrame(columns=["ano", "mes", "mes_num", "secao", "indicador", "valor", "data"])
         df_atividades = pd.DataFrame(columns=["mês", "número de participantes"])
 
     return ResultadoReprocessamento(df_main, df_gerencial, df_atividades, avisos)

@@ -15,7 +15,12 @@ DATA_DIR = Path(__file__).parent.parent / "dados"
 def carregar_desdobramentos() -> pd.DataFrame:
     """
     Retorna o DataFrame principal com todos os indicadores LEM (2021–2025).
-    Colunas: ano, unidade, mes, mes_num, secao, indicador, valor, data
+    Colunas: ano, mes, mes_num, secao, indicador, valor, data
+
+    NOTA: até jul/2026 havia também uma coluna `unidade` (sempre
+    "unidade_1" — conceito removido do painel). Ela pode ainda aparecer
+    nos arquivos CSV publicados antes dessa mudança; se aparecer, é
+    inofensiva e nenhuma página do painel a utiliza.
     """
     df = pd.read_csv(
         DATA_DIR / "lem_desdobramentos.csv",
