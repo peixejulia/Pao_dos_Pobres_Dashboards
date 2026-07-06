@@ -21,7 +21,10 @@ gerando dados fragmentados ou duplicados. Se no futuro a Fundação passar
 a reportar por unidade de fato, vale reintroduzir o campo com uma lista
 fixa (não texto livre) para evitar esse risco.
 """
+from pathlib import Path
+
 import streamlit as st
+from PIL import Image
 
 from utils.style import titulo_com_logo
 from utils.tratamento import (
@@ -40,7 +43,11 @@ from utils.github_sync import (
     ErroGitHub,
 )
 
-st.set_page_config(page_title="Gerenciar Dados · LEM", layout="wide")
+# Mesmo ícone (logo da Fundação) do resto do painel, definido em app.py —
+# repetido aqui porque esta página também chama set_page_config() por conta
+# própria (para ajustar o título da aba especificamente desta página).
+_LOGO_ICONE = Image.open(Path(__file__).parent.parent / "assets" / "logo.png")
+st.set_page_config(page_title="Gerenciar Dados · LEM", page_icon=_LOGO_ICONE, layout="wide")
 
 titulo_com_logo("Gerenciar Dados")
 st.markdown(

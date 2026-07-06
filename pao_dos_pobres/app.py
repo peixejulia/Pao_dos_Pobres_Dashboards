@@ -6,12 +6,21 @@ st.navigation()/st.Page(), independente do nome dos arquivos.
 
 Para rodar:  streamlit run app.py
 """
+from pathlib import Path
+
 import streamlit as st
+from PIL import Image
 
 # ── Configuração da página (única para todo o app) ────────────────────────────
+# page_icon: logo da Fundação (em vez de emoji) — aparece na aba do navegador.
+# Usamos um objeto PIL (não o caminho em texto) porque o caminho relativo se
+# comporta de forma inconsistente dependendo de onde o Streamlit é iniciado;
+# abrir o arquivo diretamente evita essa ambiguidade.
+_LOGO_ICONE = Image.open(Path(__file__).parent / "assets" / "logo.png")
+
 st.set_page_config(
     page_title="Pão dos Pobres — Dashboard LEM",
-    page_icon="🏠",
+    page_icon=_LOGO_ICONE,
     layout="wide",
 )
 
