@@ -5,7 +5,6 @@ Permite à equipe da Fundação:
   • Ver quais planilhas LEM estão hoje alimentando o painel
   • Adicionar uma planilha nova (ano/unidade) ou substituir uma existente
   • Excluir uma planilha (o painel recalcula tudo sem ela)
-  • Adicionar/substituir o arquivo "LEM anual completo" (gerencial + atividades)
 
 Cada mudança reprocessa TODOS os dados a partir dos arquivos que restarem
 e publica o resultado num único commit no GitHub — o mesmo repositório
@@ -19,7 +18,6 @@ from utils.tratamento import (
     reprocessar_tudo,
     serializar_para_publicacao,
     parse_lem_file,
-    parse_lem_anual_2025,
     ErroDeFormato,
 )
 from utils.github_sync import (
@@ -28,7 +26,6 @@ from utils.github_sync import (
     publicar_mudancas,
     testar_conexao,
     path_anual,
-    path_gerencial,
     PASTA_DADOS_TRATADOS,
     ErroGitHub,
 )
@@ -42,41 +39,40 @@ st.markdown(
     "automaticamente em cerca de 1 minuto."
 )
 
-with st.expander("ℹ️ Como usar esta página (leia antes de começar)", expanded=True):
+st.markdown("**ℹ️ Como usar esta página** (clique em cada tópico abaixo para expandir)")
+
+with st.expander("❓ O que é \"Unidade\"?"):
     st.markdown(
-        "**O que é \"Unidade\"?** É a casa/unidade física da Fundação que gerou "
-        "aquela planilha (caso existam várias casas reportando separadamente). "
-        "Hoje todos os dados históricos usam **`unidade_1`** — a não ser que "
-        "você tenha certeza de que o arquivo é de uma casa diferente, **deixe "
-        "sempre `unidade_1`**.\n\n"
-        "---\n\n"
-        "**Passo a passo — Adicionar ou substituir uma planilha anual:**\n"
-        "1. Vá na aba **\"📅 Planilhas anuais por unidade\"** abaixo.\n"
-        "2. Em **Ano**, escolha o ano da planilha (ex.: 2026).\n"
-        "3. Em **Unidade**, deixe `unidade_1` (a não ser que saiba que é outra).\n"
-        "4. Clique em **Upload** e escolha o arquivo Excel (.xlsx) no seu computador.\n"
-        "5. Confira a mensagem de prévia (\"Planilha lida com sucesso: X registros "
+        "É a casa/unidade física da Fundação que gerou aquela planilha (caso "
+        "existam várias casas reportando separadamente). Hoje todos os dados "
+        "históricos usam **`unidade_1`** — a não ser que você tenha certeza de "
+        "que o arquivo é de uma casa diferente, **deixe sempre `unidade_1`**."
+    )
+
+with st.expander("📅 Passo a passo — Adicionar ou substituir uma planilha anual"):
+    st.markdown(
+        "1. Em **Ano**, escolha o ano da planilha (ex.: 2026).\n"
+        "2. Em **Unidade**, deixe `unidade_1` (a não ser que saiba que é outra).\n"
+        "3. Clique em **Upload** e escolha o arquivo Excel (.xlsx) no seu computador.\n"
+        "4. Confira a mensagem de prévia (\"Planilha lida com sucesso: X registros "
         "encontrados\"). Se aparecer um erro em vermelho, pare e peça ajuda antes "
         "de continuar.\n"
-        "6. Clique em **\"✅ Confirmar e publicar\"** e aguarde a mensagem de "
+        "5. Clique em **\"✅ Confirmar e publicar\"** e aguarde a mensagem de "
         "sucesso — o site público reinicia sozinho em seguida (leva uns 30 a "
         "60 segundos).\n"
-        "7. Se já existia uma planilha para o mesmo ano e unidade, ela é "
+        "6. Se já existia uma planilha para o mesmo ano e unidade, ela é "
         "**substituída automaticamente** pela nova — não duplica dados.\n\n"
-        "**Passo a passo — Excluir uma planilha:**\n"
+        "**Dica:** faça um arquivo de cada vez e espere a publicação terminar "
+        "antes de subir o próximo."
+    )
+
+with st.expander("🗑️ Passo a passo — Excluir uma planilha"):
+    st.markdown(
         "1. Encontre a planilha na lista em **\"Planilhas atualmente no "
         "painel\"**.\n"
         "2. Clique em **\"🗑️ Excluir\"** ao lado dela.\n"
         "3. Confirme clicando em **\"Sim, excluir\"**. O painel público é "
-        "recalculado sem os dados daquele ano/unidade.\n\n"
-        "**Passo a passo — Arquivo gerencial anual (indicadores de efetividade "
-        "e atividades culturais):**\n"
-        "1. Vá na aba **\"📊 Arquivo gerencial anual\"**.\n"
-        "2. Em **Ano**, informe o ano do arquivo (ex.: 2025).\n"
-        "3. Clique em **Upload** e escolha o arquivo **\"LEM anual completo\"**.\n"
-        "4. Confira a prévia e clique em **\"✅ Confirmar e publicar\"**.\n\n"
-        "**Dica geral:** faça um arquivo de cada vez e espere a publicação "
-        "terminar antes de subir o próximo."
+        "recalculado sem os dados daquele ano/unidade."
     )
 
 st.divider()
@@ -124,26 +120,20 @@ arquivos_anuais_existentes = {
     for a in arquivos
     if a["metadata"] and a["metadata"]["tipo"] == "anual"
 }
-arquivo_gerencial_existente = next(
-    (a for a in arquivos if a["metadata"] and a["metadata"]["tipo"] == "gerencial"),
-    None,
-)
 
 
-def _publicar(novos_anuais: dict, novo_gerencial, ano_gerencial: int, mensagem_commit: str):
+def _publicar(novos_anuais: dict, mensagem_commit: str):
     """
     Reprocessa tudo a partir do conjunto final de arquivos (já com a
     mudança aplicada) e publica num único commit.
-    `novos_anuais`: dict {(ano, unidade): bytes_ou_None}  (None = manter como está, não usado aqui)
+    `novos_anuais`: dict {(ano, unidade): bytes_ou_None}  (None = exclui)
     """
     with st.spinner("Reprocessando dados e publicando no GitHub — isso pode levar até 1 minuto..."):
-        resultado = reprocessar_tudo(novos_anuais, novo_gerencial, ano_gerencial=ano_gerencial)
+        resultado = reprocessar_tudo(novos_anuais)
 
         mudancas = {}
         for (ano, unidade), conteudo in novos_anuais.items():
             mudancas[path_anual(ano, unidade)] = conteudo  # None = exclui
-        if arquivo_gerencial_existente or novo_gerencial is not None:
-            mudancas[path_gerencial(ano_gerencial)] = novo_gerencial
 
         saida = serializar_para_publicacao(resultado)
         for nome_arquivo, conteudo in saida.items():
@@ -165,136 +155,73 @@ def _publicar(novos_anuais: dict, novo_gerencial, ano_gerencial: int, mensagem_c
     st.balloons()
 
 
-aba_anuais, aba_gerencial = st.tabs(["📅 Planilhas anuais por unidade", "📊 Arquivo gerencial anual"])
+st.subheader("Planilhas atualmente no painel")
+if not arquivos_anuais_existentes:
+    st.info("Nenhuma planilha anual publicada ainda.")
+else:
+    for (ano, unidade), info in sorted(arquivos_anuais_existentes.items()):
+        col1, col2, col3 = st.columns([2, 2, 1])
+        col1.markdown(f"**{ano}** — {unidade}")
+        col2.caption(f"{info['tamanho_kb']} KB")
+        if col3.button("🗑️ Excluir", key=f"del_{ano}_{unidade}"):
+            st.session_state["confirmar_exclusao"] = (ano, unidade)
 
-# ── ABA 1: planilhas anuais ───────────────────────────────────────────────────
-with aba_anuais:
-    st.subheader("Planilhas atualmente no painel")
-    if not arquivos_anuais_existentes:
-        st.info("Nenhuma planilha anual publicada ainda.")
-    else:
-        for (ano, unidade), info in sorted(arquivos_anuais_existentes.items()):
-            col1, col2, col3 = st.columns([2, 2, 1])
-            col1.markdown(f"**{ano}** — {unidade}")
-            col2.caption(f"{info['tamanho_kb']} KB")
-            if col3.button("🗑️ Excluir", key=f"del_{ano}_{unidade}"):
-                st.session_state["confirmar_exclusao"] = (ano, unidade)
-
-        if "confirmar_exclusao" in st.session_state:
-            ano_del, unidade_del = st.session_state["confirmar_exclusao"]
-            st.warning(
-                f"Tem certeza que quer excluir a planilha de **{ano_del} / {unidade_del}**? "
-                "O painel será recalculado sem os dados desse ano/unidade."
-            )
-            c1, c2 = st.columns(2)
-            if c1.button("Sim, excluir", type="primary"):
-                novos_anuais = {
-                    (a, u): baixar_arquivo(info["path"])
-                    for (a, u), info in arquivos_anuais_existentes.items()
-                    if (a, u) != (ano_del, unidade_del)
-                }
-                novos_anuais[(ano_del, unidade_del)] = None  # marca para exclusão
-                novo_gerencial = (
-                    baixar_arquivo(arquivo_gerencial_existente["path"])
-                    if arquivo_gerencial_existente else None
-                )
-                ano_ger = arquivo_gerencial_existente["metadata"]["ano"] if arquivo_gerencial_existente else 2025
-                _publicar(novos_anuais, novo_gerencial, ano_ger, f"Remove planilha {ano_del}/{unidade_del}")
-                del st.session_state["confirmar_exclusao"]
-            if c2.button("Cancelar"):
-                del st.session_state["confirmar_exclusao"]
-                st.rerun()
-
-    st.divider()
-    st.subheader("Adicionar ou substituir uma planilha")
-    st.caption(
-        "Se já existir uma planilha para o mesmo ano e unidade, ela será "
-        "substituída pela nova."
-    )
-
-    col_ano, col_unidade = st.columns(2)
-    ano_novo = col_ano.number_input("Ano", min_value=2000, max_value=2100, value=2026, step=1)
-    unidade_nova = col_unidade.text_input("Unidade", value="unidade_1")
-    arquivo_novo = st.file_uploader("Planilha LEM (.xlsx)", type=["xlsx"], key="upload_anual")
-
-    if arquivo_novo is not None:
-        try:
-            preview = parse_lem_file(arquivo_novo, int(ano_novo), unidade_nova, nome_exibicao=arquivo_novo.name)
-        except ErroDeFormato as e:
-            st.error(str(e))
-            preview = None
-
-        if preview is not None:
-            if preview.empty:
-                st.warning("A planilha foi lida, mas nenhum registro com dado foi encontrado. Confira o arquivo.")
-            else:
-                st.success(f"Planilha lida com sucesso: {len(preview)} registros encontrados.")
-                st.dataframe(
-                    preview.groupby("secao")["indicador"].nunique().rename("Nº de indicadores")
-                )
-                if st.button("✅ Confirmar e publicar", type="primary", key="confirmar_anual"):
-                    novos_anuais = {
-                        (a, u): baixar_arquivo(info["path"])
-                        for (a, u), info in arquivos_anuais_existentes.items()
-                        if (a, u) != (int(ano_novo), unidade_nova)
-                    }
-                    arquivo_novo.seek(0)
-                    novos_anuais[(int(ano_novo), unidade_nova)] = arquivo_novo.read()
-                    novo_gerencial = (
-                        baixar_arquivo(arquivo_gerencial_existente["path"])
-                        if arquivo_gerencial_existente else None
-                    )
-                    ano_ger = arquivo_gerencial_existente["metadata"]["ano"] if arquivo_gerencial_existente else 2025
-                    _publicar(
-                        novos_anuais, novo_gerencial, ano_ger,
-                        f"Adiciona/substitui planilha {int(ano_novo)}/{unidade_nova}",
-                    )
-
-# ── ABA 2: arquivo gerencial ──────────────────────────────────────────────────
-with aba_gerencial:
-    st.subheader("Arquivo gerencial anual atual")
-    if arquivo_gerencial_existente is None:
-        st.info("Nenhum arquivo gerencial publicado ainda.")
-    else:
-        ano_ger_atual = arquivo_gerencial_existente["metadata"]["ano"]
-        st.markdown(f"**{ano_ger_atual}** — {arquivo_gerencial_existente['tamanho_kb']} KB")
-        if st.button("🗑️ Excluir arquivo gerencial"):
+    if "confirmar_exclusao" in st.session_state:
+        ano_del, unidade_del = st.session_state["confirmar_exclusao"]
+        st.warning(
+            f"Tem certeza que quer excluir a planilha de **{ano_del} / {unidade_del}**? "
+            "O painel será recalculado sem os dados desse ano/unidade."
+        )
+        c1, c2 = st.columns(2)
+        if c1.button("Sim, excluir", type="primary"):
             novos_anuais = {
                 (a, u): baixar_arquivo(info["path"])
                 for (a, u), info in arquivos_anuais_existentes.items()
+                if (a, u) != (ano_del, unidade_del)
             }
-            _publicar(novos_anuais, None, ano_ger_atual, "Remove arquivo gerencial")
+            novos_anuais[(ano_del, unidade_del)] = None  # marca para exclusão
+            _publicar(novos_anuais, f"Remove planilha {ano_del}/{unidade_del}")
+            del st.session_state["confirmar_exclusao"]
+        if c2.button("Cancelar"):
+            del st.session_state["confirmar_exclusao"]
+            st.rerun()
 
-    st.divider()
-    st.subheader("Adicionar ou substituir o arquivo gerencial")
-    ano_gerencial_novo = st.number_input(
-        "Ano do arquivo gerencial", min_value=2000, max_value=2100, value=2025, step=1, key="ano_gerencial"
-    )
-    arquivo_gerencial_novo = st.file_uploader(
-        'Planilha "LEM anual completo" (.xlsx)', type=["xlsx"], key="upload_gerencial"
-    )
+st.divider()
+st.subheader("Adicionar ou substituir uma planilha")
+st.caption(
+    "Se já existir uma planilha para o mesmo ano e unidade, ela será "
+    "substituída pela nova."
+)
 
-    if arquivo_gerencial_novo is not None:
-        try:
-            df_ger_preview, df_cult_preview = parse_lem_anual_2025(
-                arquivo_gerencial_novo, ano=int(ano_gerencial_novo), nome_exibicao=arquivo_gerencial_novo.name
+col_ano, col_unidade = st.columns(2)
+ano_novo = col_ano.number_input("Ano", min_value=2000, max_value=2100, value=2026, step=1)
+unidade_nova = col_unidade.text_input("Unidade", value="unidade_1")
+arquivo_novo = st.file_uploader("Planilha LEM (.xlsx)", type=["xlsx"], key="upload_anual")
+
+if arquivo_novo is not None:
+    try:
+        preview = parse_lem_file(arquivo_novo, int(ano_novo), unidade_nova, nome_exibicao=arquivo_novo.name)
+    except ErroDeFormato as e:
+        st.error(str(e))
+        preview = None
+
+    if preview is not None:
+        if preview.empty:
+            st.warning("A planilha foi lida, mas nenhum registro com dado foi encontrado. Confira o arquivo.")
+        else:
+            st.success(f"Planilha lida com sucesso: {len(preview)} registros encontrados.")
+            st.dataframe(
+                preview.groupby("secao")["indicador"].nunique().rename("Nº de indicadores")
             )
-        except ErroDeFormato as e:
-            st.error(str(e))
-            df_ger_preview = None
-
-        if df_ger_preview is not None:
-            st.success(
-                f"Planilha lida com sucesso: {len(df_ger_preview)} registros gerenciais e "
-                f"{len(df_cult_preview)} registros de atividades culturais encontrados."
-            )
-            if st.button("✅ Confirmar e publicar", type="primary", key="confirmar_gerencial"):
+            if st.button("✅ Confirmar e publicar", type="primary", key="confirmar_anual"):
                 novos_anuais = {
                     (a, u): baixar_arquivo(info["path"])
                     for (a, u), info in arquivos_anuais_existentes.items()
+                    if (a, u) != (int(ano_novo), unidade_nova)
                 }
-                arquivo_gerencial_novo.seek(0)
+                arquivo_novo.seek(0)
+                novos_anuais[(int(ano_novo), unidade_nova)] = arquivo_novo.read()
                 _publicar(
-                    novos_anuais, arquivo_gerencial_novo.read(), int(ano_gerencial_novo),
-                    f"Adiciona/substitui arquivo gerencial {int(ano_gerencial_novo)}",
+                    novos_anuais,
+                    f"Adiciona/substitui planilha {int(ano_novo)}/{unidade_nova}",
                 )
