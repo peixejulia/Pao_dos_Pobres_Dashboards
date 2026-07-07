@@ -146,3 +146,71 @@ def paleta_azuis(n: int) -> list:
         r, g, b = colorsys.hls_to_rgb(matiz, luminosidade, saturacao)
         cores.append("#{:02x}{:02x}{:02x}".format(round(r * 255), round(g * 255), round(b * 255)))
     return cores
+
+
+# ── Categorias dos indicadores de Efetividade Gerencial (LEM Gerencial 2025) ──
+# Os 13 indicadores do arquivo gerencial são heterogêneos — para facilitar a
+# leitura, foram agrupados em 3 categorias temáticas (usadas na página
+# "Efetividade Gerencial" para colorir gráficos e organizar os KPIs).
+CATEGORIAS_GERENCIAL = {
+    "Atendimento e Permanência": [
+        "Número De Crianças E Adolescentes Atendidos",
+        "Crianças E Adolescentes Em Ensino Regular Matriculados",
+        "Crianças E Adolescentes/Desligamentos",
+        "Crianças E Adolescentes/Evasões",
+    ],
+    "Inserção e Efetividade": [
+        "Adolescentes Inseridos Em Cursos Profissionalizantes",
+        "Adolescentes Inseridos No Mercado De Trabalho",
+        "Apadrinhamentos Afetivos Efetivados",
+    ],
+    "Equipe e Atividades": [
+        "Atividades Lúdicas/Recreativas/Culturais",
+        "Capacitações Coordenações",
+        "Capacitações Equipes",
+        "PIAS / Relatórios",
+        "Reuniões De Equipe",
+        "Visitas Domiciliares",
+    ],
+}
+
+# Mesmas cores usadas em CORES_SECAO, reaproveitadas aqui para manter a
+# identidade visual — mas representam uma dimensão diferente (categoria de
+# efetividade gerencial, não seção temática do LEM principal).
+CORES_CATEGORIA_GERENCIAL = {
+    "Atendimento e Permanência": "#257C9D",  # azul petróleo institucional
+    "Inserção e Efetividade": "#6B8D49",     # oliva
+    "Equipe e Atividades": "#DE9B35",        # mostarda
+}
+
+# Classificação de cada indicador como "nível" (retrato/foto do mês — ex.:
+# quantas crianças estão atualmente atendidas) ou "evento" (contagem de
+# ocorrências no mês — ex.: quantos desligamentos aconteceram). Essa
+# distinção importa porque somar um indicador de "nível" ao longo dos meses
+# não faz sentido (dá um número sem significado real), enquanto somar um
+# indicador de "evento" é uma métrica válida (total de ocorrências no ano).
+TIPO_INDICADOR_GERENCIAL = {
+    "Número De Crianças E Adolescentes Atendidos": "nivel",
+    "Crianças E Adolescentes Em Ensino Regular Matriculados": "nivel",
+    "Adolescentes Inseridos Em Cursos Profissionalizantes": "nivel",
+    "Adolescentes Inseridos No Mercado De Trabalho": "nivel",
+    "Apadrinhamentos Afetivos Efetivados": "nivel",
+    "Crianças E Adolescentes/Desligamentos": "evento",
+    "Crianças E Adolescentes/Evasões": "evento",
+    "Atividades Lúdicas/Recreativas/Culturais": "evento",
+    "Capacitações Coordenações": "evento",
+    "Capacitações Equipes": "evento",
+    "PIAS / Relatórios": "evento",
+    "Reuniões De Equipe": "evento",
+    "Visitas Domiciliares": "evento",
+}
+
+
+def categoria_do_indicador_gerencial(indicador: str) -> str:
+    """Devolve a categoria (Atendimento/Inserção/Equipe) de um indicador
+    gerencial, ou "Outros" se não estiver mapeado (ex.: indicador novo
+    adicionado no futuro)."""
+    for categoria, indicadores in CATEGORIAS_GERENCIAL.items():
+        if indicador in indicadores:
+            return categoria
+    return "Outros"

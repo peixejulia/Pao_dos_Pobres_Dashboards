@@ -184,3 +184,47 @@ def resumo_completude(pivot_comp: pd.DataFrame) -> list[str]:
     else:
         frases.append("Nenhum indicador apresenta lacunas relevantes — os dados estão bem completos.")
     return frases
+
+
+# ── Página 7 — Efetividade Gerencial ────────────────────────────────────────────
+def resumo_efetividade(df: pd.DataFrame) -> list[str]:
+    """df: lem_gerencial já filtrado, colunas indicador, mes_num, valor."""
+    if df.empty:
+        return ["Não há dados para os filtros selecionados."]
+
+    frases = []
+    d = df.dropna(subset=["valor"])
+    if d.empty:
+        return ["Não há dados para os filtros selecionados."]
+
+    alvo = "Número De Crianças E Adolescentes Atendidos"
+    serie = d[d["indicador"] == alvo].sort_values("mes_num")
+    if not serie.empty:
+        frases.append(
+            f"Em 2025 (jan–nov), a Fundação atendeu em média "
+            f"**{serie['valor'].mean():.0f} crianças e adolescentes por mês**."
+        )
+
+    mercado = d[d["indicador"] == "Adolescentes Inseridos No Mercado De Trabalho"]
+    if not mercado.empty and mercado["valor"].sum() == 0:
+        frases.append(
+            "Nenhum adolescente foi inserido no **mercado de trabalho** em todo o "
+            "período registrado — um ponto de atenção para a Fundação."
+        )
+
+    cursos = (
+        d[d["indicador"] == "Adolescentes Inseridos Em Cursos Profissionalizantes"]
+        .sort_values("mes_num")
+    )
+    if len(cursos) >= 2:
+        pico = cursos["valor"].max()
+        ultimo = cursos["valor"].iloc[-1]
+        if ultimo < pico:
+            frases.append(
+                f"As inserções em **cursos profissionalizantes** caíram de um pico de "
+                f"{pico:.0f} para {ultimo:.0f} no último mês registrado."
+            )
+
+    if not frases:
+        frases.append("Ainda não há dados suficientes para gerar um resumo.")
+    return frases
