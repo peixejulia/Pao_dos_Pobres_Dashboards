@@ -166,8 +166,16 @@ def _publicar(estado_final_anos: dict, mensagem_commit: str):
                 mudancas[caminho_novo] = conteudo
 
         saida = serializar_para_publicacao(resultado)
-        for nome_arquivo, conteudo in saida.items():
-            mudancas[f"{PASTA_DADOS_TRATADOS}/{nome_arquivo}"] = conteudo
+        # Esta página só gerencia planilhas anuais (desdobramentos) — não há
+        # upload de arquivo gerencial aqui (removido em 06/07/2026), então
+        # reprocessar_tudo() sempre roda com arquivo_gerencial=None, o que
+        # produz DataFrames VAZIOS para lem_gerencial_2025 e
+        # lem_atividades_culturais_2025. Publicar esses arquivos aqui
+        # apagaria silenciosamente os dados reais já publicados (foi
+        # exatamente o que aconteceu: um publish anterior zerou os dois).
+        # Por isso só os arquivos de desdobramentos entram nesta publicação.
+        for nome_arquivo in ("lem_desdobramentos.csv", "lem_desdobramentos.parquet"):
+            mudancas[f"{PASTA_DADOS_TRATADOS}/{nome_arquivo}"] = saida[nome_arquivo]
 
         try:
             publicar_mudancas(mudancas, mensagem_commit)
