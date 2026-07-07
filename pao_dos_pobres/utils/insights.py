@@ -12,6 +12,8 @@ lista com uma única frase neutra — nunca lança exceção.
 from __future__ import annotations
 import pandas as pd
 
+from utils.data import periodo_gerencial
+
 
 def _fmt(n) -> str:
     """Formata número no padrão brasileiro (milhar com ponto, sem decimais)."""
@@ -197,11 +199,16 @@ def resumo_efetividade(df: pd.DataFrame) -> list[str]:
     if d.empty:
         return ["Não há dados para os filtros selecionados."]
 
+    info = periodo_gerencial(df)
+    periodo_texto = info["periodo_label"]
+    if info["faltantes_label"]:
+        periodo_texto += f" — {info['faltantes_label']} ainda não preenchido(s)"
+
     alvo = "Número De Crianças E Adolescentes Atendidos"
     serie = d[d["indicador"] == alvo].sort_values("mes_num")
     if not serie.empty:
         frases.append(
-            f"Em 2025 (jan–nov), a Fundação atendeu em média "
+            f"Em {info['ano_label']} ({periodo_texto}), a Fundação atendeu em média "
             f"**{serie['valor'].mean():.0f} crianças e adolescentes por mês**."
         )
 

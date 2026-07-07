@@ -190,7 +190,7 @@ CORES_CATEGORIA_GERENCIAL = {
 # não faz sentido (dá um número sem significado real), enquanto somar um
 # indicador de "evento" é uma métrica válida (total de ocorrências no ano).
 TIPO_INDICADOR_GERENCIAL = {
-    "Número De Crianças E Adolescentes Atendidos": "nivel",
+    "Número De Crianças E Adolescentes Atendidos": "evento",  # confirmado por Julia em 07/07/2026: contagem de atendimentos no mês, não estoque/retrato
     "Crianças E Adolescentes Em Ensino Regular Matriculados": "nivel",
     "Adolescentes Inseridos Em Cursos Profissionalizantes": "nivel",
     "Adolescentes Inseridos No Mercado De Trabalho": "nivel",
