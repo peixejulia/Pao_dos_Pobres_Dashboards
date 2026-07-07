@@ -192,7 +192,7 @@ def _kpi_total(col, indicadores: list, rotulo: str, mostrar_variacao: bool = Fal
 
 linha1 = st.columns(3)
 linha2 = st.columns(2)
-_kpi_total(linha1[0], ["Número De Crianças E Adolescentes Atendidos"], "Crianças atendidas", mostrar_variacao=True)
+_kpi_total(linha1[0], ["Número De Crianças E Adolescentes Atendidos"], "Jovens atendidos", mostrar_variacao=True)
 _kpi_nivel(linha1[1], "Adolescentes Inseridos Em Cursos Profissionalizantes", "Cursos profissionalizantes")
 _kpi_nivel(linha1[2], "Adolescentes Inseridos No Mercado De Trabalho", "Mercado de trabalho")
 _kpi_nivel(linha2[0], "Apadrinhamentos Afetivos Efetivados", "Apadrinhamentos ativos")
